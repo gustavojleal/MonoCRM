@@ -1,0 +1,36 @@
+{
+  "welcome": "Bem-vindo ao Micro CRM",
+  "user_greeting": "Olá, {{name}}!",
+  "button": {
+    "submit": "Enviar",
+    "cancel": "Cancelar"
+  },
+  "dashboard": "Painel de Controle",
+  "contacts": "Contatos",
+  "leads": "Leads",
+  "accounts": "Contas",
+  "deals": "Negócios",
+  "calendar": "Calendário",
+  "tasks": "Tarefas",
+  "calls": "Chamadas",
+  "email": "E-mail",
+  "documents": "Documentos",
+  "products": "Produtos",
+  "reports": "Relatórios",
+  "customer_service": "Atendimento ao Cliente",
+  "settings": "Configurações",
+  "search": {
+    "placeholder": "Pesquisar...",
+    "no_results": "Nenhum resultado encontrado",
+    "search_input": "Digite para pesquisar...",
+    "search_button": "Pesquisar",
+    "search_no_results": "Nenhum resultado encontrado",
+    "search_error": "Erro ao buscar resultados"
+  },
+  "error": {
+    "not_found": "Página não encontrada",
+    "server_error": "Erro no servidor, por favor tente novamente mais tarde",
+    "unauthorized": "Acesso não autorizado, por favor faça login",
+    "forbidden": "Proibido, você não tem permissão para acessar este recurso"
+  }
+}

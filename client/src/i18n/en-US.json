@@ -1,0 +1,32 @@
+{
+  "welcome": "Welcome to our application!",
+  "user_greeting": "Hello, {{name}}!",
+  "button": {
+    "submit": "Submit",
+    "cancel": "Cancel"
+  },
+  "dashboard": "Dashboard",
+  "contacts": "Contacts",
+  "leads": "Leads",
+  "accounts": "Accounts",
+  "deals": "Deals",
+  "calendar": "Calendar",
+  "tasks": "Tasks",
+  "calls": "Calls",
+  "email": "Email",
+  "documents": "Documents",
+  "products": "Products",
+  "reports": "Reports",
+  "customer_service": "Customer Service",
+  "settings": "Settings",
+  "search": {
+    "placeholder": "Search...",
+    "no_results": "No results found"
+  },
+  "error": {
+    "not_found": "Page not found",
+    "server_error": "Server error, please try again later",
+    "unauthorized": "Unauthorized access, please log in",
+    "forbidden": "Forbidden, you do not have permission to access this resource"
+  }
+}
