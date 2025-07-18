@@ -1,0 +1,23 @@
+{
+  "name": "microcrm",
+  "version": "1.0.0",
+  "scripts": {
+    "install:client": "cd client && npm install",
+    "install:server": "cd server && dotnet restore",
+    "install": "concurrently \"npm:install:client\" \"npm:install:server\"",
+    "dev:client": "cd client && npm start",
+    "dev:server": "cd server && dotnet watch run",
+    "dev": "concurrently -n \"SERVER,CLIENT\" -c \"bgBlue.bold,bgGreen.bold\" \"npm:dev:server\" \"npm:dev:client\"",
+    "build:client": "cd client && npm run build",
+    "build:server": "cd server && dotnet publish -c Release -o dist",
+    "build": "concurrently \"npm:build:client\" \"npm:build:server\"",
+    "start": "cd server && dotnet run"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2",
+    "http-proxy-middleware": "^2.0.6"
+  },
+  "dependencies": {
+    "i18next": "^23.9.0"
+  }
+}

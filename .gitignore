@@ -1,0 +1,76 @@
+# Dependências do Node.js
+node_modules/
+
+# dependencies
+client/node_modules
+client/.pnp
+client/.pnp.js
+
+# testing
+client/coverage
+
+# production
+client/build
+
+# misc
+client/.env.local
+client/.env.development.local
+client/.DS_Store
+client/.env.test.local
+client/.env.production.local
+
+client/npm-debug.log*
+client/yarn-debug.log*
+client/yarn-error.log*
+
+
+/server/bin/
+/server/obj/
+/server/*.user
+/server/*.rsuser
+/server/*.suo
+/server/*.cache
+/server/*.pdb
+/server/*.mdb
+/server/*.log
+/server/*.vspscc
+/server/*.vssscc
+
+# Configurações do editor/IDE
+.vscode/
+.idea/
+*.swp
+
+# Configurações locais
+/server/.vs/
+/server/.idea/
+/server/.vscode/
+/server/*.sln.docstates
+
+# Arquivos do sistema
+.DS_Store
+Thumbs.db
+/server/.DS_Store
+/server/Thumbs.db
+
+# Variáveis de ambiente
+.env
+.env.local
+.env.*.local
+/server/.env
+/server/*.env
+
+# Relatórios de teste
+coverage/
+
+# Relatórios de depuração
+*.log
+
+# Arquivos de lock do pacote (opcional, se não quiser versionar)
+package-lock.json
+yarn.lock
+
+# Logs e relatórios
+/server/logs/
+/server/*.log
+/server/TestResults/
