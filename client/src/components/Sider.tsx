@@ -1,11 +1,12 @@
 import React, { useContext, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import {
   FiHome, FiUser, FiTarget, FiBriefcase, FiDollarSign,
   FiCalendar, FiCheckSquare, FiPhone, FiMail,
   FiBarChart2, FiSettings, FiFile, FiBox, FiHelpCircle, FiGlobe
 } from 'react-icons/fi';
-import { IoMdArrowDropright } from 'react-icons/io'; // Importing all icons from react-icons/fi
+import { IoMdArrowDropright } from 'react-icons/io';
 import { getLanguages, changeLanguage } from '../i18n/utils';
 import LanguageSwitch from './LanguageSwitch';
 import { AppConfigContext } from '../app/AppConfigContext';
@@ -13,6 +14,7 @@ import { AppConfigContext } from '../app/AppConfigContext';
 
 const Sider = () => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
   const appConfig = useContext(AppConfigContext);
   const { showSider } = appConfig || {};
   const [showLangDropdown, setShowLangDropdown] = useState(false);
@@ -21,15 +23,14 @@ const Sider = () => {
   const languages = getLanguages();
 
 
+
   const menuItems = [
     { name: 'dashboard', icon: <FiHome /> },
     {
       name: 'contacts', icon: <FiUser />, dropdown: [
         { name: 'all_contacts' },
-        { name: 'new_contact' },
-
+        { name: 'new_contact', action: 'CreateContact' },
       ]
-
     },
     { name: 'leads', icon: <FiTarget /> },
     { name: 'accounts', icon: <FiBriefcase /> },
@@ -43,23 +44,25 @@ const Sider = () => {
     { name: 'reports', icon: <FiBarChart2 /> },
     { name: 'customer_service', icon: <FiHelpCircle /> },
     { name: 'settings', icon: <FiSettings /> },
-    { name: 'language', icon: <FiGlobe /> },
-
+    { name: 'language', icon: <FiGlobe />, action: 'changeLanguage' },
   ];
 
   const handleMenuClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     const label = e.currentTarget.getAttribute('data-label');
-    if (label) {
-      // 
-      console.log(`Menu item clicked: ${label}`);
-    }
-    if (label === 'language') {
+    const action = e.currentTarget.getAttribute('data-action');
+    if (action === 'changeLanguage') {
       setShowLangDropdown((prev) => !prev);
+      setShowDropdownFor(null);
+      return;
+    }
 
-    } else {
+    if (action) {
+      navigate(`/${action}`);
+    } else if (label) {
       setShowDropdownFor((prev) => (prev === label ? null : label));
     }
-  }
+  };
+
   const handleLanguageChange = (langCode: string) => {
     changeLanguage(langCode);
     setShowLangDropdown(false);
@@ -69,20 +72,20 @@ const Sider = () => {
     <aside className={`sider ${showSider ? '' : 'collapsed'}`}>
       <nav>
         <ul>
-
           {menuItems.map((item) => (
             <li key={item.name} style={{ position: 'relative' }}>
               <button
                 type="button"
                 className="sider-menu-btn"
                 data-label={item.name}
+                data-action={item.action}
                 onClick={handleMenuClick}
               >
                 <span className="sider-icon">{item.icon}</span>
                 {showSider && <span>{t(item.name)}</span>}
                 {item.dropdown && (
-                  <span className="sider-icon"><IoMdArrowDropright /></span>)}
-
+                  <span className="sider-icon"><IoMdArrowDropright /></span>
+                )}
               </button>
               {item.dropdown && showDropdownFor === item.name && (
                 <ul className="sider-dropdown">
@@ -92,6 +95,7 @@ const Sider = () => {
                         type="button"
                         className="sider-menu-btn"
                         data-label={sub.name}
+                        data-action={sub.action}
                         onClick={handleMenuClick}
                       >
                         {showSider && <span>{t(sub.name)}</span>}
@@ -114,6 +118,7 @@ const Sider = () => {
           )}
         </ul>
       </nav>
+
     </aside>
   );
 };

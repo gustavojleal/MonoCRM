@@ -1,9 +1,10 @@
 import React, { useEffect } from 'react';
-import { Outlet } from 'react-router-dom';
+import { Outlet, Routes, Route } from 'react-router-dom';
 import { AppConfigContext } from './AppConfigContext';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import Sider from '../components/Sider';
+import CreateContactForm from '../components/CreateContactForm';
 import '../styles/style.css';
 
 const MainLayout = () => {
@@ -23,7 +24,12 @@ const MainLayout = () => {
       <Header />
       <Sider />
       <main>
-        <Outlet />
+        <Routes>
+          <Route path="/" element={<Outlet />}>
+            <Route path="createContact" element={<CreateContactForm />} />
+            {/* Adicione outras rotas aqui */}
+          </Route>
+        </Routes>
       </main>
       <Footer />
     </>

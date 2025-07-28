@@ -1,9 +1,8 @@
 using System.ComponentModel.DataAnnotations;
-using Server.Interfaces;
 
 namespace Server.DTOs
 {
-  public class CreateContactDto : IContactBase
+  public class CreateLeadDto
   {
     [Required]
     [StringLength(100)]
@@ -27,12 +26,26 @@ namespace Server.DTOs
     [StringLength(100)]
     public string? JobTitle { get; set; }
 
-    [StringLength(500)]
+    [StringLength(50)]
+    public string Status { get; set; } = "New";
+
+    [StringLength(50)]
+    public string Source { get; set; } = "Unknown";
+
+    [StringLength(50)]
+    public string Priority { get; set; } = "Medium";
+
+    [StringLength(1000)]
     public string? Notes { get; set; }
 
+    public DateTime? LastContactDate { get; set; }
+
     public int? AccountId { get; set; }
+
+    public int? ConvertedContactId { get; set; }
   }
-  public class UpdateContactDto : IContactBase
+
+  public class UpdateLeadDto
   {
     [Required]
     [StringLength(100)]
@@ -56,9 +69,22 @@ namespace Server.DTOs
     [StringLength(100)]
     public string? JobTitle { get; set; }
 
-    [StringLength(500)]
+    [StringLength(50)]
+    public string Status { get; set; } = "New";
+
+    [StringLength(50)]
+    public string Source { get; set; } = "Unknown";
+
+    [StringLength(50)]
+    public string Priority { get; set; } = "Medium";
+
+    [StringLength(1000)]
     public string? Notes { get; set; }
 
+    public DateTime? LastContactDate { get; set; }
+
     public int? AccountId { get; set; }
+
+    public int? ConvertedContactId { get; set; }
   }
 }

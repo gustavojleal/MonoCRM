@@ -31,14 +31,11 @@ namespace Server.Models
     [StringLength(500)]
     public string? Notes { get; set; }
 
-    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
-    public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
+    public int? AccountId { get; set; }
 
     // Navigation properties
-    public int? AccountId { get; set; }
     public Account? Account { get; set; }
-
     public ICollection<Deal> Deals { get; set; } = new List<Deal>();
-    public ICollection<Task> Tasks { get; set; } = new List<Task>();
+    public ICollection<Models.Task> Tasks { get; set; } = new List<Models.Task>();
   }
 }
