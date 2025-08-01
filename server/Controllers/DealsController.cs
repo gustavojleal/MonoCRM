@@ -10,9 +10,9 @@ namespace Server.Controllers
   [Route("api/[controller]")]
   public class DealsController : ControllerBase
   {
-    private readonly CrmDbContext _context;
+    private readonly AppDbContext _context;
 
-    public DealsController(CrmDbContext context)
+    public DealsController(AppDbContext context)
     {
       _context = context;
     }

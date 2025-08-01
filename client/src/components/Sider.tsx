@@ -9,7 +9,7 @@ import {
 import { IoMdArrowDropright } from 'react-icons/io';
 import { getLanguages, changeLanguage } from '../i18n/utils';
 import LanguageSwitch from './LanguageSwitch';
-import { AppConfigContext } from '../app/AppConfigContext';
+import { AppConfigContext } from '../app/AppConfigProvider';
 
 
 const Sider = () => {
@@ -32,11 +32,17 @@ const Sider = () => {
         { name: 'new_contact', action: 'CreateContact' },
       ]
     },
-    { name: 'leads', icon: <FiTarget /> },
+    {
+      name: 'leads', icon: <FiTarget />,
+      dropdown: [
+        { name: 'all_leads' },
+        { name: 'new_lead', action: 'CreateLead' },
+      ]
+    },
     { name: 'accounts', icon: <FiBriefcase /> },
     { name: 'deals', icon: <FiDollarSign /> },
     { name: 'calendar', icon: <FiCalendar /> },
-    { name: 'tasks', icon: <FiCheckSquare /> },
+    { name: 'Activitys', icon: <FiCheckSquare /> },
     { name: 'calls', icon: <FiPhone /> },
     { name: 'email', icon: <FiMail /> },
     { name: 'documents', icon: <FiFile /> },

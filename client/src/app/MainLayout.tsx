@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
-import { Outlet, Routes, Route } from 'react-router-dom';
-import { AppConfigContext } from './AppConfigContext';
+import { Outlet } from 'react-router-dom';
+import { AppConfigContext } from './AppConfigProvider';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import Sider from '../components/Sider';
-import CreateContactForm from '../components/CreateContactForm';
+
 import '../styles/style.css';
 
 const MainLayout = () => {
@@ -19,21 +19,20 @@ const MainLayout = () => {
       }
     }
   }, [appConfig]);
+
   return (
-    <>
+    <div className="app-container">
       <Header />
-      <Sider />
-      <main>
-        <Routes>
-          <Route path="/" element={<Outlet />}>
-            <Route path="createContact" element={<CreateContactForm />} />
-            {/* Adicione outras rotas aqui */}
-          </Route>
-        </Routes>
-      </main>
+      <div className="content-wrapper">
+        <Sider />
+        <main>
+          <Outlet />
+        </main>
+      </div>
       <Footer />
-    </>
+    </div>
   );
 };
 
 export default MainLayout;
+

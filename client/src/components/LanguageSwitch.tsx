@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, useContext } from 'react';
 import { Check } from 'react-feather';
-import { AppConfigContext } from '../app/AppConfigContext';
+import { AppConfigContext } from '../app/AppConfigProvider';
 import i18n from '../i18n/i18n';
 import { iLanguage } from '../i18n/resources';
 

@@ -46,7 +46,6 @@ namespace Server.Models
     public int? LeadId { get; set; }
     public Lead? Lead { get; set; }
 
-    public ICollection<Task> Tasks { get; set; } = new List<Task>();
-    public ICollection<DealProduct> DealProducts { get; set; } = new List<DealProduct>();
+    public ICollection<Activity> Activitys { get; set; } = new List<Activity>();
   }
 }

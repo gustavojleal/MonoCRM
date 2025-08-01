@@ -10,9 +10,9 @@ namespace Server.Controllers
   [Route("api/[controller]")]
   public class ContactsController : ControllerBase
   {
-    private readonly CrmDbContext _context;
+    private readonly AppDbContext _context;
 
-    public ContactsController(CrmDbContext context)
+    public ContactsController(AppDbContext context)
     {
       _context = context;
     }
@@ -54,7 +54,14 @@ namespace Server.Controllers
         Notes = createContactDto.Notes,
         AccountId = createContactDto.AccountId
       };
-
+      if (await _context.Contacts.AnyAsync(c => 
+          (!string.IsNullOrEmpty(createContactDto.Email) && c.Email == createContactDto.Email) ||
+          (!string.IsNullOrEmpty(createContactDto.Phone) && c.Phone == createContactDto.Phone)))
+      {
+        return BadRequest(new { 
+            Message = "Já existe um contato com o mesmo e-mail ou telefone" 
+        });
+      }
       _context.Contacts.Add(contact);
       await _context.SaveChangesAsync();
 
@@ -80,7 +87,15 @@ namespace Server.Controllers
       contact.JobTitle = updateContactDto.JobTitle;
       contact.Notes = updateContactDto.Notes;
       contact.AccountId = updateContactDto.AccountId;
-
+      if (await _context.Contacts.AnyAsync(c => 
+          c.Id != id && 
+          (!string.IsNullOrEmpty(updateContactDto.Email) && c.Email == updateContactDto.Email ||
+          (!string.IsNullOrEmpty(updateContactDto.Phone) && c.Phone == updateContactDto.Phone))))
+      {
+        return BadRequest(new { 
+            Message = "Já existe um contato com o mesmo e-mail ou telefone" 
+        });
+      }
       try
       {
         await _context.SaveChangesAsync();

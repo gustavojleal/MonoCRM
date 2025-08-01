@@ -35,6 +35,5 @@ namespace Server.Models
     public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
 
     // Navigation properties
-    public ICollection<DealProduct> DealProducts { get; set; } = new List<DealProduct>();
   }
 }

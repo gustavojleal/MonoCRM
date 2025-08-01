@@ -2,10 +2,11 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Server.DTOs
 {
-  public class CreateTaskDto
+  public class CreateActivityDto
   {
     [Required]
     [StringLength(200)]
+    public int Id { get; set; }
     public string Title { get; set; } = string.Empty;
 
     [StringLength(1000)]
@@ -33,7 +34,7 @@ namespace Server.DTOs
     public int? AccountId { get; set; }
   }
 
-  public class UpdateTaskDto
+  public class UpdateActivityDto
   {
     [Required]
     [StringLength(200)]

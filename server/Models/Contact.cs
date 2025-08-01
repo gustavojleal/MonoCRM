@@ -32,10 +32,12 @@ namespace Server.Models
     public string? Notes { get; set; }
 
     public int? AccountId { get; set; }
+    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+    public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
 
     // Navigation properties
     public Account? Account { get; set; }
     public ICollection<Deal> Deals { get; set; } = new List<Deal>();
-    public ICollection<Models.Task> Tasks { get; set; } = new List<Models.Task>();
+    public ICollection<Models.Activity> Activitys { get; set; } = new List<Models.Activity>();
   }
 }

@@ -59,6 +59,7 @@ Thumbs.db
 .env.*.local
 /server/.env
 /server/*.env
+/server/appsettings.json
 
 # Relatórios de teste
 coverage/

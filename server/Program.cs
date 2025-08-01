@@ -3,11 +3,20 @@ using Server.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Configurar o DbContext com PostgreSQL
-builder.Services.AddDbContext<CrmDbContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+// DbContext with PostgreSQL
+builder.Services.AddDbContext<AppDbContext>(options => 
+{
+    
+    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"));
+    
+    if (builder.Environment.IsDevelopment())
+    {
+        options.EnableDetailedErrors();
+        options.EnableSensitiveDataLogging();
+    }
+});
 
-// Outros serviços
+
 builder.Services.AddControllers();
 builder.Services.AddAuthorization();
 builder.Services.AddEndpointsApiExplorer();
@@ -25,6 +34,13 @@ builder.Services.AddCors(options =>
 });
 
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+    var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    dbContext.Database.Migrate();
+}
+
 
 // Configure middleware pipeline
 if (app.Environment.IsDevelopment())

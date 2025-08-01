@@ -38,6 +38,9 @@ namespace Server.DTOs
     [StringLength(1000)]
     public string? Notes { get; set; }
 
+    [StringLength(30)]
+    public string? AssignedTo { get; set; } // User ID or username of the
+
     public DateTime? LastContactDate { get; set; }
 
     public int? AccountId { get; set; }
