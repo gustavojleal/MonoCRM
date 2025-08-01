@@ -121,7 +121,7 @@ const NotificationItem: React.FC<{
     return () => {
       if (timer) clearTimeout(timer);
     };
-  }, [handleClose]);
+  }, [isVisible, autoClose, notification.timeout, autoCloseDuration, timer]);
 
 
 

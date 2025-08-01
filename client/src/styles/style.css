@@ -5,19 +5,22 @@
     "navbar"
     "content"
     "footer";
-  grid-template-rows: var(--header-height) 1fr var(--footer-height);
+
+  grid-template-rows: var(--navbar-height) 1fr var(--footer-height);
   min-height: 100vh;
 }
 
-.app-container {
-  display: grid;
-  grid-template-areas:
-    "header"
-    "navbar"
-    "content"
-    "footer";
-  grid-template-rows: var(--navbar-height) 1fr var(--footer-height);
-  min-height: 100vh;
+/* ===== MAIN CONTENT ===== */
+.content {
+  grid-area: content;
+  width: 96vw;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 20px 0;
+  background: #fff;
+  border-radius: 0 0 16px 16px;
+  box-shadow: 0 4px 24px rgba(100, 100, 150, 0.07);
+
 }
 
 /* ===== SIDER DROPDOWN ===== */
@@ -193,6 +196,22 @@ body.sider-collapsed {
   margin-left: 0.75rem;
 }
 
+/* ===== MAIN CONTENT ===== */
+main {
+  width: 96vw;
+  max-width: 1400px;
+  margin: 0 auto;
+  margin-left: var(--sidebar-width);
+  padding: 20px 0;
+  background: #fff;
+  border-radius: 0 0 16px 16px;
+  box-shadow: 0 4px 24px rgba(100, 100, 150, 0.07);
+  min-height: 60vh;
+  transition: margin-left var(--transition-speed) ease;
+  grid-area: main;
+  padding: 2rem;
+}
+
 /* MAIN CONTENT */
 .main {
   grid-area: main;
@@ -205,7 +224,6 @@ body.sider-collapsed {
   left: var(--sidebar-width);
   top: var(--header-height);
   width: calc(100vw - var(--sidebar-width));
-  transition: left var(--transition-speed) ease, width var(--transition-speed) ease;
   z-index: 1;
   overflow-y: auto;
 }
@@ -214,7 +232,6 @@ body.sider-collapsed main {
   left: var(--sidebar-collapsed-width);
   width: calc(100vw - var(--sidebar-collapsed-width));
 }
-
 
 
 .sider-toggle {
@@ -318,21 +335,6 @@ body.sider-collapsed footer {
   padding: px 0;
 }
 
-/* ===== MAIN CONTENT ===== */
-main {
-  width: 96vw;
-  max-width: 1400px;
-  margin: 0 auto;
-  margin-left: var(--sidebar-width);
-  padding: 20px 0;
-  background: #fff;
-  border-radius: 0 0 16px 16px;
-  box-shadow: 0 4px 24px rgba(100, 100, 150, 0.07);
-  min-height: 60vh;
-  transition: margin-left var(--transition-speed) ease;
-  grid-area: main;
-  padding: 2rem;
-}
 
 body.sider-collapsed main {
   margin-left: var(--sidebar-collapsed-width);

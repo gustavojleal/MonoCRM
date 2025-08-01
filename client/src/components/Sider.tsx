@@ -33,11 +33,11 @@ const Sider = () => {
       ]
     },
     {
-      name: 'leads', icon: <FiTarget />,
-      dropdown: [
-        { name: 'all_leads' },
-        { name: 'new_lead', action: 'CreateLead' },
-      ]
+      name: 'leads', icon: <FiTarget />, action: 'LeadPage'
+      // dropdown: [
+      //   { name: 'all_leads', action: 'LeadPage' },
+      //   { name: 'new_lead', action: 'CreateLead' },
+      // ]
     },
     { name: 'accounts', icon: <FiBriefcase /> },
     { name: 'deals', icon: <FiDollarSign /> },

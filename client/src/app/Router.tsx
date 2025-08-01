@@ -4,6 +4,7 @@ import HomePage from '../pages/HomePage';
 import AboutPage from '../pages/AboutPage';
 import CreateContactForm from '../components/Forms/ContactForm';
 import CreateLeadForm from '../components/Forms/LeadForm';
+import { LeadPage } from '../pages/LeadPage';
 
 const router = createBrowserRouter([
   {
@@ -15,6 +16,7 @@ const router = createBrowserRouter([
       { path: 'aboutpage', element: <AboutPage /> },
       { path: 'createContact', element: <CreateContactForm /> },
       { path: 'CreateLead', element: <CreateLeadForm /> },
+      { path: 'LeadPage', element: <LeadPage /> },
 
     ]
   }

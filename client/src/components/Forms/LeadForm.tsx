@@ -15,7 +15,6 @@ const LeadForm: React.FC<LeadFormProps> = ({ onSave, isSaving = true }) => {
 
   const handleSubmit = methods.handleSubmit(async (data) => {
     try {
-      console.log('Form Data:', data);
       const savedLead = await LeadService.create(data as Lead);
       if (onSave) onSave(savedLead);
     } catch (error) {
