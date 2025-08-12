@@ -21,7 +21,7 @@ namespace Server.Controllers
     [HttpGet]
     public async Task<ActionResult<IEnumerable<Models.Activity>>> GetActivitys()
     {
-      var Activitys = await _context.Activity.ToListAsync();
+      var Activitys = await _context.Activities.ToListAsync();
       return Ok(Activitys);
     }
 
@@ -29,7 +29,7 @@ namespace Server.Controllers
     [HttpGet("{id}")]
     public async Task<ActionResult<Models.Activity>> GetActivity(int id)
     {
-      var Activity = await _context.Activity.FindAsync(id);
+      var Activity = await _context.Activities.FindAsync(id);
 
       if (Activity == null)
       {
@@ -53,12 +53,11 @@ namespace Server.Controllers
         DueDate = createActivityDto.DueDate,
         CompletedDate = createActivityDto.CompletedDate,
         ContactId = createActivityDto.ContactId,
-        LeadId = createActivityDto.LeadId,
         DealId = createActivityDto.DealId,
         AccountId = createActivityDto.AccountId
       };
 
-      _context.Activity.Add(Activity);
+      _context.Activities.Add(Activity);
       await _context.SaveChangesAsync();
 
       return CreatedAtAction(nameof(GetActivity), new { id = Activity.Id }, Activity);
@@ -68,7 +67,7 @@ namespace Server.Controllers
     [HttpPut("{id}")]
     public async Task<IActionResult> UpdateActivity(int id, UpdateActivityDto updateActivityDto)
     {
-      var Activity = await _context.Activity.FindAsync(id);
+      var Activity = await _context.Activities.FindAsync(id);
 
       if (Activity == null)
       {
@@ -83,7 +82,6 @@ namespace Server.Controllers
       Activity.DueDate = updateActivityDto.DueDate;
       Activity.CompletedDate = updateActivityDto.CompletedDate;
       Activity.ContactId = updateActivityDto.ContactId;
-      Activity.LeadId = updateActivityDto.LeadId;
       Activity.DealId = updateActivityDto.DealId;
       Activity.AccountId = updateActivityDto.AccountId;
 
@@ -110,13 +108,13 @@ namespace Server.Controllers
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteActivity(int id)
     {
-      var Activity = await _context.Activity.FindAsync(id);
+      var Activity = await _context.Activities.FindAsync(id);
       if (Activity == null)
       {
         return NotFound();
       }
 
-      _context.Activity.Remove(Activity);
+      _context.Activities.Remove(Activity);
       await _context.SaveChangesAsync();
 
       return NoContent();
@@ -124,7 +122,7 @@ namespace Server.Controllers
 
     private bool ActivityExists(int id)
     {
-      return _context.Activity.Any(e => e.Id == id);
+      return _context.Activities.Any(e => e.Id == id);
     }
   }
 }

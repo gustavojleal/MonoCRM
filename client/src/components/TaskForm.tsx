@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Task, CreateTaskPayload, UpdateTaskPayload } from '../types/types';
-import { TaskService } from '../services/api';
+import { TaskService } from '../services/PublicApi';
 
 interface TaskFormProps {
   task?: Task;

@@ -14,11 +14,11 @@ namespace Server.Interfaces
 
     [EmailAddress]
     [StringLength(255)]
-    string? Email { get; set; }
+    string Email { get; set; }
 
     [Phone]
     [StringLength(20)]
-    string? Phone { get; set; }
+    string Phone { get; set; }
 
     [StringLength(100)]
     string? Company { get; set; }
@@ -26,8 +26,7 @@ namespace Server.Interfaces
     [StringLength(100)]
     string? JobTitle { get; set; }
 
-    [StringLength(500)]
-    string? Notes { get; set; }
+ 
 
     int? AccountId { get; set; }
   }

@@ -33,9 +33,6 @@ namespace Server.Models
     public int? ContactId { get; set; }
     public Contact? Contact { get; set; }
 
-    public int? LeadId { get; set; }
-    public Lead? Lead { get; set; }
-
     public int? DealId { get; set; }
     public Deal? Deal { get; set; }
 

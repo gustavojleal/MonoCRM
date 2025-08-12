@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import {
   FiHome, FiUser, FiTarget, FiBriefcase, FiDollarSign,
   FiCalendar, FiCheckSquare, FiPhone, FiMail,
-  FiBarChart2, FiSettings, FiFile, FiBox, FiHelpCircle, FiGlobe
+  FiBarChart2, FiSettings, FiFile, FiBox, FiHelpCircle, FiGlobe, FiChevronRight, FiChevronsRight
 } from 'react-icons/fi';
 import { IoMdArrowDropright } from 'react-icons/io';
 import { getLanguages, changeLanguage } from '../i18n/utils';
@@ -25,22 +25,15 @@ const Sider = () => {
 
 
   const menuItems = [
-    { name: 'dashboard', icon: <FiHome /> },
+    { name: 'dashboard', icon: <FiHome />, action: 'homepage' },
     {
-      name: 'contacts', icon: <FiUser />, dropdown: [
-        { name: 'all_contacts' },
+      name: 'contacts', icon: <FiUser />, action: 'contactpage',
+      dropdown: [
+        { name: 'all_contacts', action: 'contactList' },
         { name: 'new_contact', action: 'CreateContact' },
       ]
     },
-    {
-      name: 'leads', icon: <FiTarget />, action: 'LeadPage'
-      // dropdown: [
-      //   { name: 'all_leads', action: 'LeadPage' },
-      //   { name: 'new_lead', action: 'CreateLead' },
-      // ]
-    },
     { name: 'accounts', icon: <FiBriefcase /> },
-    { name: 'deals', icon: <FiDollarSign /> },
     { name: 'calendar', icon: <FiCalendar /> },
     { name: 'Activitys', icon: <FiCheckSquare /> },
     { name: 'calls', icon: <FiPhone /> },
@@ -50,6 +43,7 @@ const Sider = () => {
     { name: 'reports', icon: <FiBarChart2 /> },
     { name: 'customer_service', icon: <FiHelpCircle /> },
     { name: 'settings', icon: <FiSettings /> },
+    { name: 'users', icon: <FiUser />, action: 'AdminDashboard' },
     { name: 'language', icon: <FiGlobe />, action: 'changeLanguage' },
   ];
 

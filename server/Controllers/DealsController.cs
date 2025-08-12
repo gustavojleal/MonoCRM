@@ -56,7 +56,6 @@ namespace Server.Controllers
         Notes = createDealDto.Notes,
         AccountId = createDealDto.AccountId,
         ContactId = createDealDto.ContactId,
-        LeadId = createDealDto.LeadId
       };
 
       _context.Deals.Add(deal);
@@ -87,7 +86,6 @@ namespace Server.Controllers
       deal.Notes = updateDealDto.Notes;
       deal.AccountId = updateDealDto.AccountId;
       deal.ContactId = updateDealDto.ContactId;
-      deal.LeadId = updateDealDto.LeadId;
 
       try
       {

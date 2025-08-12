@@ -33,8 +33,6 @@ namespace Server.DTOs
     public int? AccountId { get; set; }
 
     public int? ContactId { get; set; }
-
-    public int? LeadId { get; set; }
   }
 
   public class UpdateDealDto
@@ -68,7 +66,5 @@ namespace Server.DTOs
     public int? AccountId { get; set; }
 
     public int? ContactId { get; set; }
-
-    public int? LeadId { get; set; }
   }
 }

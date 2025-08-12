@@ -15,7 +15,7 @@ export const AppLayout: React.FC<AppLayoutProps> = ({
 }) => {
   return (
     <HelmetProvider>
-      <div className="flex flex-col min-h-screen bg-gray-50">
+      <div >
         <Helmet>
           <title>{title}</title>
           <meta name="description" content={description} />
@@ -23,8 +23,8 @@ export const AppLayout: React.FC<AppLayoutProps> = ({
         </Helmet>
 
 
-        <main className="flex-grow">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <main >
+          <div >
             {children}
           </div>
         </main>

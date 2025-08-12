@@ -8,7 +8,7 @@ interface FormBuilderProps {
   formTitle: string;
   formConfig: FieldConfig[];
   methods: UseFormReturn;
-  onSubmit: (data: any) => void;
+  onSubmit: (data: any) => void | Promise<void>
 }
 
 const FormBuilder: React.FC<FormBuilderProps> = ({
@@ -19,10 +19,12 @@ const FormBuilder: React.FC<FormBuilderProps> = ({
 }) => {
   const { t } = useTranslation();
   const { control, handleSubmit, formState: { errors } } = methods;
-
+  const orderedformConfig = formConfig.sort((a, b) => {
+    return (a.order ?? 0) - (b.order ?? 0);
+  });
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      {formConfig.map((fieldConfig) => (
+      {orderedformConfig.map((fieldConfig) => (
         <div key={fieldConfig.name} className="mb-3">
           <label htmlFor={fieldConfig.name} className="form-label">
             {t(`${formTitle}.${fieldConfig.label}`)}

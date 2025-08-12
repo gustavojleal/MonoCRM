@@ -2,6 +2,24 @@ export type EntityStatus = 'active' | 'inactive' | 'pending';
 export type TaskPriority = 'low' | 'medium' | 'high';
 export type TaskStatus = 'pending' | 'in-progress' | 'completed';
 
+export interface User {
+  id?: string;
+  password?: string;
+  email?: string;
+  userName?: string;
+  fullName?: string;
+  roles?: string[];
+  createdAt?: string;
+}
+
+export interface Role {
+  id: string;
+  name: string;
+  // permissions: string[];
+}
+
+
+
 export interface Account {
   id: number;
   name: string;

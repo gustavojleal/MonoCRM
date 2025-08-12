@@ -51,6 +51,5 @@ namespace Server.Models
     // Navigation properties
     public ICollection<Contact>? Contacts { get; set; } = new List<Contact>();
     public ICollection<Deal>? Deals { get; set; } = new List<Deal>();
-    public ICollection<Lead> Leads { get; set; } = new List<Lead>();
   }
 }

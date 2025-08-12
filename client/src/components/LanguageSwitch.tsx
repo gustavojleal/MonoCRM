@@ -8,7 +8,6 @@ type LanguageSwitchProps = {
   languages: iLanguage[];
   initialLanguage?: string;
   onChange: (languageCode: string) => void;
-
   darkMode?: boolean;
 };
 

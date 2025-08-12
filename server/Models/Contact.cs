@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Server.Models
 {
@@ -28,9 +29,6 @@ namespace Server.Models
     [StringLength(100)]
     public string? JobTitle { get; set; }
 
-    [StringLength(500)]
-    public string? Notes { get; set; }
-
     public int? AccountId { get; set; }
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
@@ -38,6 +36,7 @@ namespace Server.Models
     // Navigation properties
     public Account? Account { get; set; }
     public ICollection<Deal> Deals { get; set; } = new List<Deal>();
-    public ICollection<Models.Activity> Activitys { get; set; } = new List<Models.Activity>();
+    public ICollection<Activity> Activities { get; set; } = new List<Activity>();
+    public ICollection<History> Histories { get; set; } = new List<History>();
   }
 }

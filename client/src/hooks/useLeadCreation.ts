@@ -1,7 +1,7 @@
 // hooks/leads/useLeadCreation.ts
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useNotification } from '../app/core/NotificationContext';
+import { useNotification } from '../context/NotificationContext';
 
 // Tipo para os dados do lead
 export interface LeadData {

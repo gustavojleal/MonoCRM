@@ -3,7 +3,7 @@ using Server.Interfaces;
 
 namespace Server.DTOs
 {
-  public class CreateContactDto : IContactBase
+  public abstract class ContactBaseDto
   {
     [Required]
     [StringLength(100)]
@@ -26,39 +26,24 @@ namespace Server.DTOs
 
     [StringLength(100)]
     public string? JobTitle { get; set; }
-
-    [StringLength(500)]
-    public string? Notes { get; set; }
 
     public int? AccountId { get; set; }
   }
-  public class UpdateContactDto : IContactBase
+
+  public class CreateContactDto : ContactBaseDto
   {
-    [Required]
-    [StringLength(100)]
-    public string FirstName { get; set; } = string.Empty;
+    // To add specific properties for creation if needed
+  }
 
-    [Required]
-    [StringLength(100)]
-    public string LastName { get; set; } = string.Empty;
+  public class UpdateContactDto : ContactBaseDto
+  {
+    // To add specific properties for update if needed
+  }
 
-    [EmailAddress]
-    [StringLength(255)]
-    public string? Email { get; set; }
-
-    [Phone]
-    [StringLength(20)]
-    public string? Phone { get; set; }
-
-    [StringLength(100)]
-    public string? Company { get; set; }
-
-    [StringLength(100)]
-    public string? JobTitle { get; set; }
-
-    [StringLength(500)]
-    public string? Notes { get; set; }
-
-    public int? AccountId { get; set; }
+  public class ContactResponseDto : ContactBaseDto
+  {
+    public int Id { get; set; }
+    public DateTime CreatedAt { get; set; }
+    public DateTime UpdatedAt { get; set; }
   }
 }

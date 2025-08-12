@@ -1,10 +1,12 @@
 import { createBrowserRouter } from 'react-router-dom';
 import MainLayout from './MainLayout';
 import HomePage from '../pages/HomePage';
+import ContactPage from '../pages/ContactPage';
 import AboutPage from '../pages/AboutPage';
 import CreateContactForm from '../components/Forms/ContactForm';
-import CreateLeadForm from '../components/Forms/LeadForm';
-import { LeadPage } from '../pages/LeadPage';
+import ContactList from '../components/ContactList';
+import UserLogin from '../components/Forms/UserLogin'
+import AdminDashboard from '../pages/AdminDashboard'
 
 const router = createBrowserRouter([
   {
@@ -14,9 +16,11 @@ const router = createBrowserRouter([
       { index: true, element: <HomePage /> },
       { path: 'homepage', element: <HomePage /> },
       { path: 'aboutpage', element: <AboutPage /> },
-      { path: 'createContact', element: <CreateContactForm /> },
-      { path: 'CreateLead', element: <CreateLeadForm /> },
-      { path: 'LeadPage', element: <LeadPage /> },
+      { path: 'contactpage', element: <ContactPage /> },
+      { path: 'createcontact', element: <CreateContactForm /> },
+      { path: 'contactlist', element: <ContactList /> },
+      { path: 'userlogin', element: <UserLogin /> },
+      { path: 'admindashboard', element: <AdminDashboard /> }
 
     ]
   }

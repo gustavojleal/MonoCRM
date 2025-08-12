@@ -11,22 +11,22 @@ const MainLayout = () => {
   const appConfig = React.useContext(AppConfigContext);
 
   useEffect(() => {
-    if (appConfig) {
-      if (appConfig.showSider) {
-        document.body.classList.remove('sider-collapsed');
-      } else {
-        document.body.classList.add('sider-collapsed');
-      }
+    if (appConfig?.showSider) {
+      document.body.classList.remove('sider-collapsed');
+    } else {
+      document.body.classList.add('sider-collapsed');
     }
   }, [appConfig]);
 
   return (
     <div className="app-container">
       <Header />
-      <div className="content-wrapper">
+      <div className="layout-body" >
         <Sider />
-        <main>
-          <Outlet />
+        <main className="content-area">
+          <section className="main-content">
+            <Outlet />
+          </section>
         </main>
       </div>
       <Footer />

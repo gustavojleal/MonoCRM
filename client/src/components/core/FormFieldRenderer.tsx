@@ -29,7 +29,7 @@ const FormFieldRenderer: React.FC<FormFieldRendererProps> = ({
     case FieldType.SELECT:
       return (
         <select {...commonProps}>
-          <option value="">{t('select_option')}</option>
+          <option value="">{t(commonProps.placeholder)}</option>
           {fieldConfig.options?.map(option => (
             <option key={option} value={option}>
               {t(option)}

@@ -27,8 +27,6 @@ namespace Server.DTOs
 
     public int? ContactId { get; set; }
 
-    public int? LeadId { get; set; }
-
     public int? DealId { get; set; }
 
     public int? AccountId { get; set; }
@@ -57,8 +55,6 @@ namespace Server.DTOs
     public DateTime? CompletedDate { get; set; }
 
     public int? ContactId { get; set; }
-
-    public int? LeadId { get; set; }
 
     public int? DealId { get; set; }
 
