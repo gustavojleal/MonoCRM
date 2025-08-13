@@ -1,4 +1,11 @@
 import { FieldConfig, FieldType } from '../../../types/formTypes';
+import { getRoles } from '../utils/FormUtils';
+
+
+  
+  const rolesRaw = await getRoles();
+  const rolesParsed = rolesRaw ? JSON.parse(rolesRaw) : [];
+  const rolesOptions = rolesParsed.map((role: { id: string, name: string }) => role.name);
 
 export const userFormConfig: FieldConfig[] =
 [
@@ -24,9 +31,8 @@ export const userFormConfig: FieldConfig[] =
     type: FieldType.SELECT,
     placeholder: 'Roles',
     defaultValue: 0,
-    options: ["Admin", "Manager", "User"],
+    options: rolesOptions,
     order: 3
   }
 
 ]
-

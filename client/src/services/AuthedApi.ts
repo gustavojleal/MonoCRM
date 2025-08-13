@@ -5,6 +5,7 @@ const API_URL = 'http://localhost:5000/api';
 
 const authedApi = axios.create({
   baseURL: API_URL,
+  withCredentials: true,
 });
 
 authedApi.interceptors.request.use(config => {
@@ -12,7 +13,6 @@ authedApi.interceptors.request.use(config => {
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }
-  config.headers.withCredentials = true;
 
   return config;
 });

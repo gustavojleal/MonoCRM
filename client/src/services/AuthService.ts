@@ -35,11 +35,7 @@ export const AuthService = {
     }
   },
 
-    // 👇 Operações de Usuário (Admin)
-  async getAllUsers(): Promise<User[]> {
-    const response = await api.get<User[]>('/auth/users');
-    return response.data;
-  },
+
 
 
   // 👇 Gestão de Sessão

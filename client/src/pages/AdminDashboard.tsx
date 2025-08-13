@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { AuthService } from '../services/AuthService';
+import { UserService } from "../services/UserService";
 import UserTable from '../components/UserManagement/UserTable';
 import UserForm from '../components/UserManagement/UserForm';
 import { User, Role } from '../types/types';
@@ -28,7 +29,9 @@ const AdminDashboard: React.FC = () => {
         if (!currentUser?.roles?.includes('Admin')) {
           throw new Error('Permissão insuficiente');
         }
-        const usersData = await AuthService.getAllUsers();
+        console.log('Carregando usuários...');
+        const usersData = await UserService.getAllUsers();
+        console.log('Usuários carregados:', usersData);
         setUsers(usersData);
 
       } catch (err) {

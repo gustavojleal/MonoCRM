@@ -51,7 +51,6 @@ builder.Services.ConfigureApplicationCookie(options =>
         context.Response.StatusCode = StatusCodes.Status403Forbidden;
         return Task.CompletedTask;
     };
-    
     // Optional: Customize cookie name if needed
     options.Cookie.Name = "app_auth";
     
