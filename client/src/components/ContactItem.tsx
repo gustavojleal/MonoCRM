@@ -12,11 +12,12 @@ const ContactItem: React.FC<ContactItemProps> = ({ contact }) => {
     <>
       <tr key={contact.id} className="Contact-row">
 
-        <td className="Contact-cell">{formatField(contact.id, 4)}</td>
         <td className="Contact-cell">{formatField(contact.firstName, 15)}</td>
         <td className="Contact-cell">{formatField(contact.lastName, 15)}</td>
         <td className="Contact-cell">{formatField(contact.phone, 14)}</td>
         <td className="Contact-cell">{formatField(contact.email, 25)}</td>
+        <td className="Contact-cell">{formatField(contact.company, 10)}</td>
+        <td className="Contact-cell">{formatField(contact.jobTitle, 10)}</td>
         <td className="Contact-cell">{formatField(contact.createdAt, 10)}</td>
         <td className="Contact-cell">{formatField(contact.updatedAt, 10)}</td>
       </tr>

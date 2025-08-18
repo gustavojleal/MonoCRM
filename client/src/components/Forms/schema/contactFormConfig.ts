@@ -31,12 +31,20 @@ export const contactFormConfig: FieldConfig[] = [
     validation: { pattern: /^\d{10,11}$/, message: 'invalid_phone' },
     order: 3
   },
-  // { name: 'company',
-  //   label: 'company',
-  //   type: FieldType.TEXT,
-  //   placeholder: 'enter_company',
-  //   order: 5
-  // },
+  { name: 'company',
+    label: 'company',
+    type: FieldType.TEXT,
+    placeholder: 'enter_company',
+    order: 5
+  },
+  { name: 'jobTitle',
+    label: 'jobTitle',
+    type: FieldType.TEXT,
+    placeholder: 'enter_job_title',
+    order: 6
+  },
+
+  
   // { name: 'companyPhone',
   //   label: 'companyPhone',
   //   type: FieldType.TEL,

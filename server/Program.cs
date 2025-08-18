@@ -1,6 +1,8 @@
 using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Identity; // Only keep this Identity namespace
+using Microsoft.AspNetCore.Identity; 
 using Server.Data;
+using Server.Services; 
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,6 +22,11 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 });
 
 builder.Services.AddControllers();
+
+// Registrando os serviços de dependência
+
+
+
 builder.Services.AddAuthorization();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -94,7 +101,14 @@ builder.Services.AddCors(options =>
 });
 
 
-// builder.Services.AddScoped<IEmailService, EmailService>(); // Implementar serviço de email quando necessário
+builder.Logging.ClearProviders();
+builder.Logging.AddConsole();
+
+// builder.Services.AddScoped<IEmailService, EmailService>(); 
+builder.Services.AddScoped<IContactService, ContactService>();
+builder.Services.AddScoped<IHistoryService, HistoryService>();
+builder.Services.AddAutoMapper(typeof(Program).Assembly);
+
 
 var app = builder.Build();
 
@@ -130,6 +144,7 @@ app.Use(async (context, next) =>
 {
     if (context.Request.Method == "OPTIONS")
     {
+      Console.WriteLine("Handling CORS preflight request ===> "+ "  "+ context.Request.Path);
         context.Response.Headers["Access-Control-Allow-Credentials"] = "true";
         context.Response.Headers["Access-Control-Allow-Origin"] = "http://localhost:3000";
         context.Response.Headers["Access-Control-Allow-Headers"] = "Content-Type, Authorization, X-Requested-With";

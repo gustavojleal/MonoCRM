@@ -30,14 +30,18 @@ export interface Account {
 }
 
 export interface Contact {
-  id: number;
+  id?: number;
   firstName: string;
   lastName: string;
   email: string;
   phone: string;
-  accountId: number;
-  createdAt: string;
-  updatedAt: string;
+  company?: string;
+  jobTitle?: string;
+  status?: EntityStatus;
+  source?: string;
+  accountId?: number;
+  createdAt?: string;
+  updatedAt?: string;
 }
 
 export interface Task {

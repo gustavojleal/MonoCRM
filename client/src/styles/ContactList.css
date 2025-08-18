@@ -1,0 +1,13 @@
+/* ContactList.css
+
+Estilos para a lista de contatos
+*/
+
+.contact-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+/* Você pode adicionar mais estilos conforme necessário */

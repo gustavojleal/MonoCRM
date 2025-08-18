@@ -1,14 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { AppLayout } from '../layouts/AppLayout';
-// import NotificationContainer from '../components/core/Notifications';
 import { ContactService } from '../services/ContactService';
-// import { useNotification } from '../context/NotificationContext';
 import ContactItem from '../components/ContactItem';
 import { Contact } from '../types/types';
 
 const ContactList: React.FC = () => {
   const [contacts, setContacts] = useState<Contact[]>([]);
-  // const { showNotification } = useNotification();
 
   const fetchContacts = async () => {
     try {
@@ -35,11 +32,14 @@ const ContactList: React.FC = () => {
             <thead>
               <tr>
                 <th className="py-2 px-4 border-b">Nome</th>
-                <th className="py-2 px-4 border-b">Email</th>
+                <th className="py-2 px-4 border-b">Sobre Nome</th>
                 <th className="py-2 px-4 border-b">Telefone</th>
+                <th className="py-2 px-4 border-b">Email</th>
                 <th className="py-2 px-4 border-b">Empresa</th>
                 <th className="py-2 px-4 border-b">Cargo</th>
-                <th className="py-2 px-4 border-b">Ações</th>
+                <th className="py-2 px-4 border-b">Criado</th>
+                <th className="py-2 px-4 border-b">Atualizado em</th>
+                {/* <th className="py-2 px-4 border-b">Ações</th> */}
               </tr>
             </thead>
             <tbody>

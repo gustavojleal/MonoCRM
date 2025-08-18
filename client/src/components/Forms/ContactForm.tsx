@@ -1,4 +1,5 @@
 import React from 'react';
+import { ContactService } from '../../services/ContactService';
 import { contactFormConfig } from './schema/contactFormConfig';
 import { useDynamicForm } from '../../hooks/useDynamicForm';
 import FormBuilder from '../core/FormBuilder';
@@ -12,7 +13,8 @@ const ContactForm: React.FC<ContactFormProps> = ({ onSave, isSaving = true }) =>
   const methods = useDynamicForm(contactFormConfig);
 
   const onSubmit = (data: any) => {
-    console.log('Form Data:', data);
+    const newContact = ContactService.create(data);
+    if (onSave) onSave(newContact);
   };
 
   return (
