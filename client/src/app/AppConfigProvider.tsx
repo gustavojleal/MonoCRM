@@ -1,7 +1,6 @@
 import React, { createContext, useState, useCallback } from 'react';
 import i18n from '../i18n/i18n';
 
-
 type AppConfig = {
   toggleTheme: () => void;
   toggleSider: () => void;
@@ -24,6 +23,7 @@ export const AppConfigProvider: React.FC<{ children: React.ReactNode }> = ({ chi
   const toggleLogged = () => setUserLogged(prev => !prev)
   const toggleSider = () => setShowSider(prev => !prev);
   const toggleTheme = () => setTheme(prev => prev === 'light' ? 'dark' : 'light');
+
   const toggleLanguage = useCallback((lang: string) => {
     setCurrentLanguage(lang);
     localStorage.setItem('language', lang);
@@ -40,7 +40,7 @@ export const AppConfigProvider: React.FC<{ children: React.ReactNode }> = ({ chi
         toggleLanguage,
         currentLanguage,
         toggleLogged,
-        userLogged
+        userLogged,
       }}
     >
       {children}

@@ -2,9 +2,23 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity; 
 using Server.Data;
 using Server.Services; 
+using Server.Models;
 
 
 var builder = WebApplication.CreateBuilder(args);
+
+
+if (builder.Environment.IsDevelopment())
+{
+    builder.Logging.AddConsole().AddDebug();
+    builder.Logging.SetMinimumLevel(LogLevel.Debug);
+}
+else
+{
+    builder.Logging.AddConsole();
+    builder.Logging.SetMinimumLevel(LogLevel.Information);
+}
+
 
 // Configuração para PostgreSQL
 AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
@@ -13,12 +27,14 @@ AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 builder.Services.AddDbContext<AppDbContext>(options => 
 {
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"));
+
+  // if (builder.Environment.IsDevelopment())
+  // {
     
-    if (builder.Environment.IsDevelopment())
-    {
-        options.EnableDetailedErrors();
-        options.EnableSensitiveDataLogging();
-    }
+    options.EnableDetailedErrors();
+    options.EnableSensitiveDataLogging();
+    options.LogTo(Console.WriteLine, LogLevel.Information);
+    // }
 });
 
 builder.Services.AddControllers();
@@ -31,10 +47,8 @@ builder.Services.AddAuthorization();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// Configuração do Identity (corrigida)
 builder.Services.AddIdentity<ApplicationUser, IdentityRole<Guid>>()
     .AddEntityFrameworkStores<AppDbContext>()
-    .AddRoles<IdentityRole<Guid>>()
     .AddDefaultTokenProviders();
 
 builder.Services.ConfigureApplicationCookie(options =>
@@ -42,7 +56,6 @@ builder.Services.ConfigureApplicationCookie(options =>
     options.Cookie.SameSite = SameSiteMode.None;
     options.Cookie.HttpOnly = true;
     
-    // Auto-adjust security for environment
     options.Cookie.SecurePolicy = builder.Environment.IsDevelopment()
         ? CookieSecurePolicy.None
         : CookieSecurePolicy.Always;
@@ -90,9 +103,12 @@ builder.Services.AddAuthorization(options =>
 // CORS para desenvolvimento
 builder.Services.AddCors(options =>
 {
+    var allowedOrigins = builder.Environment.IsDevelopment() 
+      ? new[] { "http://localhost:3000" } 
+      : new[] { "https://seusite.com", "https://www.seusite.com" };
     options.AddPolicy("DefaultPolicy", policy =>
     {
-      policy.WithOrigins("http://localhost:3000")
+      policy.WithOrigins(allowedOrigins)
             .AllowAnyHeader()
             .AllowAnyMethod()
             .AllowCredentials();
@@ -106,13 +122,14 @@ builder.Logging.AddConsole();
 
 // builder.Services.AddScoped<IEmailService, EmailService>(); 
 builder.Services.AddScoped<IContactService, ContactService>();
-builder.Services.AddScoped<IHistoryService, HistoryService>();
+builder.Services.AddScoped<IContactHistoryService, ContactHistoryService>();
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
 
 
 var app = builder.Build();
 
-// Aplicar migrações e seed data
+
+//##### Use for data seeding and migrations #####
 // using (var scope = app.Services.CreateScope())
 // {
 //     var services = scope.ServiceProvider;
@@ -139,12 +156,10 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseRouting();
-
 app.Use(async (context, next) =>
 {
     if (context.Request.Method == "OPTIONS")
     {
-      Console.WriteLine("Handling CORS preflight request ===> "+ "  "+ context.Request.Path);
         context.Response.Headers["Access-Control-Allow-Credentials"] = "true";
         context.Response.Headers["Access-Control-Allow-Origin"] = "http://localhost:3000";
         context.Response.Headers["Access-Control-Allow-Headers"] = "Content-Type, Authorization, X-Requested-With";

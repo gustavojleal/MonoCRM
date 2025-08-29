@@ -87,12 +87,6 @@ export const contactFormConfig: FieldConfig[] = [
   //   placeholder: 'enter_country',
   //   order: 12
   // },
-  // { name: 'interactionHistory',
-  //   label: 'interactionHistory',
-  //   type: FieldType.TEXTAREA,
-  //   placeholder: 'enter_interaction_history',
-  //   order: 13
-  // },
   // { name: 'tags',
   //   label: 'tags',
   //   type: FieldType.SELECT,
@@ -100,14 +94,19 @@ export const contactFormConfig: FieldConfig[] = [
   //   placeholder: 'select_tags',
   //   order: 14
   // },
-  // { name: 'status',
-  //   label: 'status',
-  //   type: FieldType.SELECT,
-  //   options: ['new', 'active', 'inactive'],
-  //   defaultValue: 'new',
-  //   placeholder: 'select_status',
-  //   order: 15 
-    
-  // }
+  { name: 'status',
+    label: 'status',
+    type: FieldType.SELECT,
+    options: ['new', 'active', 'inactive'],
+    defaultValue: 'new',
+    placeholder: 'select_status',
+    order: 15 
+  },
+  { name: 'histories',
+    label: 'history',
+    type: FieldType.TEXTAREA,
+    placeholder: 'enter_interaction_history',
+    order: 16
+  },
   
 ];

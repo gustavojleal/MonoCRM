@@ -1,11 +1,12 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System;
 
 namespace Server.Models
 {
   public class Contact
   {
-    public int Id { get; set; }
+    public Guid Id { get; set; }
 
     [Required]
     [StringLength(100)]
@@ -29,7 +30,10 @@ namespace Server.Models
     [StringLength(100)]
     public string? JobTitle { get; set; }
 
-    public int? AccountId { get; set; }
+    [StringLength(30)]
+    public string? status { get; set; } = "new"; 
+
+    public Guid? AccountId { get; set; }
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
 
@@ -37,6 +41,6 @@ namespace Server.Models
     public Account? Account { get; set; }
     public ICollection<Deal> Deals { get; set; } = new List<Deal>();
     public ICollection<Activity> Activities { get; set; } = new List<Activity>();
-    public ICollection<History> Histories { get; set; } = new List<History>();
+    public ICollection<ContactHistory> ContactHistories { get; set; } = new List<ContactHistory>();
   }
 }

@@ -21,7 +21,7 @@ export interface Role {
 
 
 export interface Account {
-  id: number;
+  id: string;
   name: string;
   description?: string;
   status: EntityStatus;
@@ -42,34 +42,44 @@ export interface Contact {
   accountId?: number;
   createdAt?: string;
   updatedAt?: string;
+  history?: ContactHistory[];
+}
+
+export interface ContactHistory {
+  id: string;
+  action: string;
+  contactId: string;
+  userId: string;
+  timestamp: string;
+  details: string;
 }
 
 export interface Task {
-  id: number;
+  id: string;
   title: string;
   description: string;
   status: TaskStatus;
   priority: TaskPriority;
   type: string;
-  contactId: number;
+  contactid: string;
   createdAt: string;
   updatedAt: string;
 }
 
 export interface Deal {
-  id: number;
+  id: string;
   title: string;
   description: string;
   value: number;
   status: EntityStatus;
-  accountId: number;
-  contactId: number;
+  accountid: string;
+  contactid: string;
   createdAt: string;
   updatedAt: string;
 }
 
 export interface Product {
-  id: number;
+  id: string;
   name: string;
   description: string;
   price: number;

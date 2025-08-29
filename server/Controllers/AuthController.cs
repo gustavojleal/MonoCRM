@@ -6,7 +6,8 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
-using System.Security.Cryptography; 
+using System.Security.Cryptography;
+using Server.Models;
 
 [ApiController]
 [Route("api/[controller]")]
@@ -43,7 +44,7 @@ public class AuthController : ControllerBase
                 LockedUsers = await _userManager.Users.CountAsync(u => u.LockoutEnd != null),
                 ServerTime = DateTime.UtcNow
             };
-   
+
             return Ok(new ApiResponse<object>
             {
                 Success = true,
@@ -64,12 +65,11 @@ public class AuthController : ControllerBase
     }
 
     [HttpGet("users")]
-    public async Task<IActionResult> GetAllUsers()
+    public Task<IActionResult> GetAllUsers()
     {
         try
         {
             var users = _userManager.Users.ToList();
-
             var userList = users.Select(u => new
             {
                 u.Id,
@@ -77,13 +77,15 @@ public class AuthController : ControllerBase
                 u.Email
             });
 
-            return Ok(userList);
+            return Task.FromResult<IActionResult>(Ok(userList));
         }
         catch (Exception ex)
         {
-            return StatusCode(500, $"Erro ao buscar usuários: {ex.Message}");
+            return Task.FromResult<IActionResult>(StatusCode(500, $"Erro ao buscar usuários: {ex.Message}"));
         }
-}
+    }
+
+
     // [Authorize(Policy = "UserManagement")]
     [HttpPost("users")]
     public async Task<IActionResult> CreateUser([FromBody] CreateUserRequestDto request)
@@ -129,7 +131,7 @@ public class AuthController : ControllerBase
 
             // Generate email confirmation token
             var confirmationToken = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-            
+
             return CreatedAtAction(nameof(GetUserById), new { id = user.Id }, new ApiResponse<object>
             {
                 Success = true,
@@ -167,7 +169,7 @@ public class AuthController : ControllerBase
             };
 
             var result = await _userManager.CreateAsync(user, model.Password);
-            
+
             if (!result.Succeeded)
             {
                 return BadRequest(new ApiResponse<object>
@@ -200,91 +202,91 @@ public class AuthController : ControllerBase
         }
     }
 
-  [HttpPost("login")]
-  public async Task<IActionResult> Login([FromBody] LoginDto model)
-  {
-       try
+    [HttpPost("login")]
+    public async Task<IActionResult> Login([FromBody] LoginDto model)
     {
-        var result = await _signInManager.PasswordSignInAsync(
-            model.Username, model.Password, isPersistent: false, lockoutOnFailure: true);
-
-        if (result.IsLockedOut)
+        try
         {
-            _logger.LogWarning($"Account locked out: {model.Username}");
-            return Unauthorized(new ApiResponse<object>
+            var result = await _signInManager.PasswordSignInAsync(
+                model.Username, model.Password, isPersistent: false, lockoutOnFailure: true);
+
+            if (result.IsLockedOut)
             {
-                Success = false,
-                Message = "Account locked due to multiple failed attempts",
-                Suggestion = "Try again later or reset your password"
+                _logger.LogWarning($"Account locked out: {model.Username}");
+                return Unauthorized(new ApiResponse<object>
+                {
+                    Success = false,
+                    Message = "Account locked due to multiple failed attempts",
+                    Suggestion = "Try again later or reset your password"
+                });
+            }
+
+            if (!result.Succeeded)
+            {
+                return Unauthorized(new ApiResponse<object>
+                {
+                    Success = false,
+                    Message = "Invalid credentials"
+                });
+            }
+
+            var user = await _userManager.FindByNameAsync(model.Username);
+
+            // Add null check for user
+            if (user == null)
+            {
+                _logger.LogWarning($"Login succeeded but user not found: {model.Username}");
+                return Unauthorized(new ApiResponse<object>
+                {
+                    Success = false,
+                    Message = "User account not found"
+                });
+            }
+
+            var roles = await _userManager.GetRolesAsync(user);
+            Response.Headers["Access-Control-Allow-Credentials"] = "true";
+            Response.Headers["Access-Control-Allow-Origin"] = "http://localhost:3000";
+
+            var token = GenerateJwtToken(user, roles);
+            var refreshToken = GenerateRefreshToken();
+
+            await StoreRefreshToken(user.Id.ToString(), refreshToken);
+
+            var userProfile = new UserProfileResponse
+            {
+                Id = user.Id.ToString(),
+                Username = user.UserName,
+                Email = user.Email,
+                Roles = (await _userManager.GetRolesAsync(user)).ToArray()
+
+            };
+
+
+            return Ok(new ApiResponse<AuthResponse>
+            {
+                Success = true,
+                Data = new AuthResponse
+                {
+                    Token = token,
+                    RefreshToken = refreshToken,
+                    ExpiresIn = Convert.ToInt32(_configuration["Jwt:ExpiryInMinutes"]) * 60,
+                    TokenType = "Bearer",
+                    User = userProfile
+
+                },
+                Message = "Authentication successful"
             });
         }
-
-        if (!result.Succeeded)
+        catch (Exception ex)
         {
-            return Unauthorized(new ApiResponse<object>
+            _logger.LogError(ex, "Error during login");
+            return StatusCode(500, new ApiResponse<object>
             {
                 Success = false,
-                Message = "Invalid credentials"
+                Message = "Error during authentication",
+                Error = ex.Message
             });
         }
-
-        var user = await _userManager.FindByNameAsync(model.Username);
-        
-        // Add null check for user
-        if (user == null)
-        {
-            _logger.LogWarning($"Login succeeded but user not found: {model.Username}");
-            return Unauthorized(new ApiResponse<object>
-            {
-                Success = false,
-                Message = "User account not found"
-            });
-        }
-
-        var roles = await _userManager.GetRolesAsync(user);
-        Response.Headers["Access-Control-Allow-Credentials"] = "true";
-        Response.Headers["Access-Control-Allow-Origin"] = "http://localhost:3000";
-        
-        var token = GenerateJwtToken(user, roles);
-        var refreshToken = GenerateRefreshToken();
-
-        await StoreRefreshToken(user.Id.ToString(), refreshToken);
-
-      var userProfile = new UserProfileResponse
-      { 
-        Id = user.Id.ToString(),
-        Username = user.UserName,
-        Email = user.Email,
-        Roles = (await _userManager.GetRolesAsync(user)).ToArray()
-
-      };
-
-
-        return Ok(new ApiResponse<AuthResponse>
-        {
-          Success = true,
-          Data = new AuthResponse
-          {
-            Token = token,
-            RefreshToken = refreshToken,
-            ExpiresIn = Convert.ToInt32(_configuration["Jwt:ExpiryInMinutes"]) * 60,
-            TokenType = "Bearer",
-            User = userProfile
-
-          },
-          Message = "Authentication successful"
-        });
-    }
-    catch (Exception ex)
-    {
-        _logger.LogError(ex, "Error during login");
-        return StatusCode(500, new ApiResponse<object>
-        {
-            Success = false,
-            Message = "Error during authentication",
-            Error = ex.Message
-        });
-    }
     }
 
     [HttpPost("refresh-token")]
@@ -294,7 +296,7 @@ public class AuthController : ControllerBase
         {
             var principal = GetPrincipalFromExpiredToken(request.Token);
             var userId = principal.FindFirstValue(ClaimTypes.NameIdentifier);
-            
+
             if (string.IsNullOrEmpty(userId))
             {
                 return Unauthorized(new ApiResponse<object>
@@ -306,7 +308,7 @@ public class AuthController : ControllerBase
 
             // Validate stored refresh token (implementation depends on your storage)
             var isValid = await ValidateRefreshToken(userId, request.RefreshToken);
-            
+
             if (!isValid)
             {
                 return Unauthorized(new ApiResponse<object>
@@ -327,7 +329,7 @@ public class AuthController : ControllerBase
             }
 
             var roles = await _userManager.GetRolesAsync(user);
-            
+
             var newToken = GenerateJwtToken(user, roles);
             var newRefreshToken = GenerateRefreshToken();
 
@@ -397,7 +399,6 @@ public class AuthController : ControllerBase
                     Email = user.Email ?? string.Empty,
                     EmailConfirmed = user.EmailConfirmed,
                     Roles = roles.ToArray(),
-                    AccountCreated = user.CreatedDate 
                 }
             });
         }
@@ -464,8 +465,8 @@ public class AuthController : ControllerBase
 
         var tokenHandler = new JwtSecurityTokenHandler();
         var principal = tokenHandler.ValidateToken(token, tokenValidationParameters, out var securityToken);
-        
-        if (securityToken is not JwtSecurityToken jwtSecurityToken || 
+
+        if (securityToken is not JwtSecurityToken jwtSecurityToken ||
             !jwtSecurityToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha256, StringComparison.InvariantCultureIgnoreCase))
         {
             throw new SecurityTokenException("Invalid token");

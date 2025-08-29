@@ -39,6 +39,7 @@ const ContactList: React.FC = () => {
                 <th className="py-2 px-4 border-b">Cargo</th>
                 <th className="py-2 px-4 border-b">Criado</th>
                 <th className="py-2 px-4 border-b">Atualizado em</th>
+                <th className="py-2 px-4 border-b">Status</th>
                 {/* <th className="py-2 px-4 border-b">Ações</th> */}
               </tr>
             </thead>

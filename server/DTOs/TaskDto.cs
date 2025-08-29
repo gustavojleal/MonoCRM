@@ -6,7 +6,7 @@ namespace Server.DTOs
   {
     [Required]
     [StringLength(200)]
-    public int Id { get; set; }
+    public Guid Id { get; set; }
     public string Title { get; set; } = string.Empty;
 
     [StringLength(1000)]
@@ -25,11 +25,11 @@ namespace Server.DTOs
 
     public DateTime? CompletedDate { get; set; }
 
-    public int? ContactId { get; set; }
+    public Guid? ContactId { get; set; }
 
-    public int? DealId { get; set; }
+    public Guid? DealId { get; set; }
 
-    public int? AccountId { get; set; }
+    public Guid? AccountId { get; set; }
   }
 
   public class UpdateActivityDto
@@ -54,10 +54,10 @@ namespace Server.DTOs
 
     public DateTime? CompletedDate { get; set; }
 
-    public int? ContactId { get; set; }
+    public Guid? ContactId { get; set; }
 
-    public int? DealId { get; set; }
+    public Guid? DealId { get; set; }
 
-    public int? AccountId { get; set; }
+    public Guid? AccountId { get; set; }
   }
 }

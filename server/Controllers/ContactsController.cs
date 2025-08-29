@@ -1,12 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
 using Server.DTOs;
 using Server.Models;
-using Server.Services;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+using Server.Interfaces;
 
 using AutoMapper;
-using Microsoft.Extensions.Logging; // Adicionado para ILogger
 
 namespace Server.Controllers
 {
@@ -15,20 +12,17 @@ namespace Server.Controllers
 public class ContactsController : ControllerBase
 {
     private readonly IContactService _contactService;
-    private readonly IHistoryService _historyService;
     private readonly IMapper _mapper;
     private readonly ILogger<ContactsController> _logger; // Adicionado campo para logger
 
     public ContactsController(
         IContactService contactService,
-        IHistoryService historyService,
         IMapper mapper,
-        ILogger<ContactsController> logger) // Adicionado parâmetro de logger
+        ILogger<ContactsController> logger)
     {
         _contactService = contactService;
-        _historyService = historyService;
         _mapper = mapper;
-        _logger = logger; // Atribuição do logger
+        _logger = logger;
     }
 
     [HttpGet]
@@ -39,27 +33,18 @@ public class ContactsController : ControllerBase
     }
 
     [HttpGet("{id}")]
-    public async Task<ActionResult<ContactResponseDto>> GetContactById(int id)
+    public async Task<ActionResult<ContactResponseDto>> GetContactById(Guid id)
     {
+      Console.WriteLine("ID =========>>> "+id);
         var contact = await _contactService.GetContactByIdAsync(id);
         if (contact == null)
         {
             return NotFound();
         }
+        Console.WriteLine("Contact =========>>> "+contact);
         return Ok(_mapper.Map<ContactResponseDto>(contact));
     }
 
-    // [HttpPost]
-    // public async Task<ActionResult<ContactResponseDto>> CreateContact([FromBody] CreateContactDto createDto)
-    // {
-    //     var contact = _mapper.Map<Contact>(createDto);
-    //     var createdContact = await _contactService.CreateContactAsync(contact);
-        
-    //     return CreatedAtAction(
-    //         nameof(GetContactById),
-    //         new { id = createdContact.Id },
-    //         _mapper.Map<ContactResponseDto>(createdContact));
-    // }
     [HttpPost]
     public async Task<ActionResult<ContactResponseDto>> CreateContact([FromBody] CreateContactDto createDto)
     {
@@ -90,7 +75,7 @@ public class ContactsController : ControllerBase
         }
   }
     [HttpPut("{id}")]
-    public async Task<IActionResult> UpdateContact(int id, [FromBody] UpdateContactDto updateDto)
+    public async Task<IActionResult> UpdateContact(Guid id, [FromBody] UpdateContactDto updateDto)
     {
         var contact = await _contactService.GetContactByIdAsync(id);
         if (contact == null)
@@ -105,7 +90,7 @@ public class ContactsController : ControllerBase
     }
 
     [HttpDelete("{id}")]
-    public async Task<IActionResult> DeleteContact(int id)
+    public async Task<IActionResult> DeleteContact(Guid id)
     {
         var success = await _contactService.DeleteContactAsync(id);
         if (!success)
@@ -116,26 +101,7 @@ public class ContactsController : ControllerBase
         return NoContent();
     }
 
-    [HttpPost("{contactId}/history")]
-    public async Task<ActionResult> AddContactHistory(
-        int contactId,
-        [FromBody] CreateHistoryDto historyDto)
-    {
-        historyDto.ContactId = contactId;
-        var history = _mapper.Map<History>(historyDto);
-        await _historyService.CreateHistoryAsync(history);
-        
-        return CreatedAtAction(
-            nameof(GetContactById),
-            new { id = contactId },
-            null);
-    }
+ 
 
-    [HttpGet("{contactId}/history")]
-    public async Task<ActionResult<IEnumerable<HistoryResponseDto>>> GetContactHistory(int contactId)
-    {
-        var histories = await _historyService.GetHistoriesByContactIdAsync(contactId);
-        return Ok(_mapper.Map<IEnumerable<HistoryResponseDto>>(histories));
-    }
 }
 }

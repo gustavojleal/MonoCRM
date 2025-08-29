@@ -20,6 +20,7 @@ export const AuthService = {
     try {
       const response = await api.post<AuthResponse>('/auth/login', credentials);
       this.setSession(response.data);
+
       return response.data;
     } catch (error) {
       this.clearSession();
@@ -34,9 +35,6 @@ export const AuthService = {
       this.clearSession();
     }
   },
-
-
-
 
   // 👇 Gestão de Sessão
   setSession(authData: AuthResponse): void {
@@ -60,6 +58,11 @@ export const AuthService = {
 
   getToken(): string | null {
     return sessionStorage.getItem('authToken');
+  },
+
+  getCurrentUserId(): string | null {
+    const user = this.getCurrentUser();
+    return user ? user.id : null;
   },
 
 

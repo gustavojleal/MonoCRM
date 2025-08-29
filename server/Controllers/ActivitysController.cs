@@ -27,7 +27,7 @@ namespace Server.Controllers
 
     // GET: api/Activitys/5
     [HttpGet("{id}")]
-    public async Task<ActionResult<Models.Activity>> GetActivity(int id)
+    public async Task<ActionResult<Models.Activity>> GetActivity(Guid id)
     {
       var Activity = await _context.Activities.FindAsync(id);
 
@@ -65,7 +65,7 @@ namespace Server.Controllers
 
     // PUT: api/Activitys/5
     [HttpPut("{id}")]
-    public async Task<IActionResult> UpdateActivity(int id, UpdateActivityDto updateActivityDto)
+    public async Task<IActionResult> UpdateActivity(Guid id, UpdateActivityDto updateActivityDto)
     {
       var Activity = await _context.Activities.FindAsync(id);
 
@@ -106,7 +106,7 @@ namespace Server.Controllers
 
     // DELETE: api/Activitys/5
     [HttpDelete("{id}")]
-    public async Task<IActionResult> DeleteActivity(int id)
+    public async Task<IActionResult> DeleteActivity(Guid id)
     {
       var Activity = await _context.Activities.FindAsync(id);
       if (Activity == null)
@@ -120,7 +120,7 @@ namespace Server.Controllers
       return NoContent();
     }
 
-    private bool ActivityExists(int id)
+    private bool ActivityExists(Guid id)
     {
       return _context.Activities.Any(e => e.Id == id);
     }

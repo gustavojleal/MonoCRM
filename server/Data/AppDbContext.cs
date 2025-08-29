@@ -1,21 +1,35 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore.Design;
 using Server.Models;
 using System.Collections.Generic;
 namespace Server.Data
 {
+  public class DesignTimeDbContextFactory : IDesignTimeDbContextFactory<AppDbContext>
+  {
+      public AppDbContext CreateDbContext(string[] args)
+      {
+
+        var config = new ConfigurationBuilder()
+            .SetBasePath(Directory.GetCurrentDirectory())
+            .AddJsonFile("appsettings.json")
+            .Build();
+        var optionsBuilder = new DbContextOptionsBuilder<AppDbContext>();
+        optionsBuilder.UseNpgsql(config.GetConnectionString("DefaultConnection"));
+        return new AppDbContext(optionsBuilder.Options);
+      } 
+
+  }
   public class AppDbContext : IdentityDbContext<ApplicationUser, IdentityRole<Guid>, Guid>
   {
-     public AppDbContext(DbContextOptions<AppDbContext> options): base(options) { }
-
+    public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
     public DbSet<Deal> Deals { get; set; } 
     public DbSet<Account> Accounts { get; set; }
     public DbSet<Contact> Contacts { get; set; }
-    
     public DbSet<Product> Products { get; set; }
     public DbSet<Activity> Activities { get; set; }
-     public DbSet<History> Histories { get; set; }
+    public DbSet<ContactHistory> ContactHistory { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
       {
@@ -23,9 +37,13 @@ namespace Server.Data
 
         modelBuilder.Entity<ApplicationUser>(entity =>
         {
-            entity.Property(u => u.UserName).IsRequired().HasMaxLength(256);
-            entity.Property(u => u.Email).IsRequired().HasMaxLength(256);
-            entity.Property(u => u.CreatedDate).HasDefaultValueSql("now()");
+          entity.ToTable(name: "Users");
+          entity.Property(u => u.UserName).IsRequired().HasMaxLength(100);
+          entity.Property(u => u.NormalizedUserName).HasMaxLength(100);
+          entity.Property(u => u.Email).IsRequired().HasMaxLength(256);
+          entity.Property(u => u.NormalizedEmail).HasMaxLength(256);
+          entity.HasIndex(u => u.NormalizedUserName).IsUnique();
+          entity.HasIndex(u => u.NormalizedEmail);          
         });
       // Configuração de Account
         modelBuilder.Entity<Account>(entity =>
@@ -74,11 +92,21 @@ namespace Server.Data
               .OnDelete(DeleteBehavior.ClientSetNull);
         });
 
-        // Correção do nome da propriedade de navegação (Activitys -> Activities)
-        modelBuilder.Entity<Contact>()
-            .HasMany(c => c.Activities)
-            .WithOne(t => t.Contact)
-            .HasForeignKey(t => t.ContactId);
+        // Configuração de History para busca
+        modelBuilder.Entity<ContactHistory>(entity =>
+        {
+          entity.Property(h => h.Action).IsRequired().HasMaxLength(100);
+          entity.HasIndex(h => h.Action);
+          entity.HasIndex(h => h.ContactId);
+          entity.HasIndex(h => h.UserId);
+        });
+
+      // Correção do nome da propriedade de navegação (Activitys -> Activities)
+      modelBuilder.Entity<Contact>()
+          .HasMany(c => c.ContactHistories)
+          .WithOne(t => t.Contact)
+          .HasForeignKey(t => t.ContactId);
       }
     }
 }
+

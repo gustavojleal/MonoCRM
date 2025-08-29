@@ -27,7 +27,10 @@ namespace Server.DTOs
     [StringLength(100)]
     public string? JobTitle { get; set; }
 
-    public int? AccountId { get; set; }
+    public Guid? AccountId { get; set; }
+
+    [StringLength(30)]
+    public string? Status { get; set; } = "new"; // Default status
   }
 
   public class CreateContactDto : ContactBaseDto
@@ -42,8 +45,9 @@ namespace Server.DTOs
 
   public class ContactResponseDto : ContactBaseDto
   {
-    public int Id { get; set; }
+    public Guid Id { get; set; }
     public DateTime CreatedAt { get; set; }
     public DateTime UpdatedAt { get; set; }
+    public List<ContactHistoryResponseDto>? Histories { get; set;}
   }
 }

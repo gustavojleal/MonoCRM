@@ -24,8 +24,6 @@ client/yarn-debug.log*
 client/yarn-error.log*
 
 
-/server/bin/
-/server/obj/
 /server/*.user
 /server/*.rsuser
 /server/*.suo
@@ -60,6 +58,14 @@ Thumbs.db
 /server/.env
 /server/*.env
 /server/appsettings.json
+
+# Arquivos de build
+/build/
+
+
+# Migrations em desenvolvimento
+/server/Data/Migrations/
+
 
 # Relatórios de teste
 coverage/

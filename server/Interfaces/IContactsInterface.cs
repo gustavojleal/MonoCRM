@@ -26,8 +26,6 @@ namespace Server.Interfaces
     [StringLength(100)]
     string? JobTitle { get; set; }
 
- 
-
-    int? AccountId { get; set; }
+     Guid? AccountId { get; set; }
   }
 }

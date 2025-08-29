@@ -27,7 +27,7 @@ namespace Server.Controllers
 
     // GET: api/Deals/5
     [HttpGet("{id}")]
-    public async Task<ActionResult<Deal>> GetDeal(int id)
+    public async Task<ActionResult<Deal>> GetDeal(Guid id)
     {
       var deal = await _context.Deals.FindAsync(id);
 
@@ -66,7 +66,7 @@ namespace Server.Controllers
 
     // PUT: api/Deals/5
     [HttpPut("{id}")]
-    public async Task<IActionResult> UpdateDeal(int id, UpdateDealDto updateDealDto)
+    public async Task<IActionResult> UpdateDeal(Guid id, UpdateDealDto updateDealDto)
     {
       var deal = await _context.Deals.FindAsync(id);
 
@@ -108,7 +108,7 @@ namespace Server.Controllers
 
     // DELETE: api/Deals/5
     [HttpDelete("{id}")]
-    public async Task<IActionResult> DeleteDeal(int id)
+    public async Task<IActionResult> DeleteDeal(Guid id)
     {
       var deal = await _context.Deals.FindAsync(id);
       if (deal == null)
@@ -122,7 +122,7 @@ namespace Server.Controllers
       return NoContent();
     }
 
-    private bool DealExists(int id)
+    private bool DealExists(Guid id)
     {
       return _context.Deals.Any(e => e.Id == id);
     }

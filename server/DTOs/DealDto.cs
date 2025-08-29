@@ -30,9 +30,9 @@ namespace Server.DTOs
     [StringLength(1000)]
     public string? Notes { get; set; }
 
-    public int? AccountId { get; set; }
+    public Guid? AccountId { get; set; }
 
-    public int? ContactId { get; set; }
+    public Guid? ContactId { get; set; }
   }
 
   public class UpdateDealDto
@@ -63,8 +63,8 @@ namespace Server.DTOs
     [StringLength(1000)]
     public string? Notes { get; set; }
 
-    public int? AccountId { get; set; }
+    public Guid? AccountId { get; set; }
 
-    public int? ContactId { get; set; }
+    public Guid? ContactId { get; set; }
   }
 }

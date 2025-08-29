@@ -12,6 +12,10 @@
   margin-top: 1rem;
 }
 
+.Contact-row:hover {
+  background-color: var(--hover-row);
+}
+
 .LeadListTable {
   border-radius: 8px;
   overflow: hidden;

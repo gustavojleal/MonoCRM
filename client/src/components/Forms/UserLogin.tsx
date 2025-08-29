@@ -14,9 +14,11 @@ const UserLoginForm: React.FC = () => {
 
   const handleSubmit = async (data: { userName: string, password: string }) => {
     try {
-      const authData = await AuthService.login(data);
+      await AuthService.login(data);
       appConfig?.toggleLogged()
       navigate('/');
+
+
     } catch (error) {
       console.error('Erro no login:', error);
     }

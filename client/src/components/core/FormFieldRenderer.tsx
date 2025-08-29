@@ -7,6 +7,7 @@ interface FormFieldRendererProps {
   formTitle: string;
   fieldConfig: FieldConfig;
   field: ControllerRenderProps;
+  fieldValues?: Record<string, any>;
   error?: any;
 }
 

@@ -4,9 +4,14 @@ using Server.DTOs;
 
 public class MappingProfile : Profile
 {
-    public MappingProfile()
-    {
-        CreateMap<Contact, ContactResponseDto>();
-        CreateMap<CreateContactDto, Contact>();
-    }
+  public MappingProfile()
+  {
+    CreateMap<CreateContactDto, Contact>();
+    CreateMap<ContactHistory, ContactHistoryResponseDto>();
+    CreateMap<CreateContactHistoryDto, ContactHistory>();
+    CreateMap<Contact, ContactResponseDto>()
+    .ForMember(dest => dest.Histories, opt => opt.MapFrom(src => src.ContactHistories));
+    CreateMap<UpdateContactDto, Contact>();
+    CreateMap<UpdateContactHistoryDto, ContactHistory>();
+  }
 }

@@ -27,7 +27,7 @@ namespace Server.Controllers
 
     // GET: api/Accounts/5
     [HttpGet("{id}")]
-    public async Task<ActionResult<Account>> GetAccount(int id)
+    public async Task<ActionResult<Account>> GetAccount(Guid id)
     {
       var account = await _context.Accounts.FindAsync(id);
 
@@ -67,7 +67,7 @@ namespace Server.Controllers
 
     // PUT: api/Accounts/5
     [HttpPut("{id}")]
-    public async Task<IActionResult> UpdateAccount(int id, UpdateAccountDto updateAccountDto)
+    public async Task<IActionResult> UpdateAccount(Guid id, UpdateAccountDto updateAccountDto)
     {
       var account = await _context.Accounts.FindAsync(id);
 
@@ -110,7 +110,7 @@ namespace Server.Controllers
 
     // DELETE: api/Accounts/5
     [HttpDelete("{id}")]
-    public async Task<IActionResult> DeleteAccount(int id)
+    public async Task<IActionResult> DeleteAccount(Guid id)
     {
       var account = await _context.Accounts.FindAsync(id);
       if (account == null)
@@ -124,7 +124,7 @@ namespace Server.Controllers
       return NoContent();
     }
 
-    private bool AccountExists(int id)
+    private bool AccountExists(Guid id)
     {
       return _context.Accounts.Any(e => e.Id == id);
     }

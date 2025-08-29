@@ -18,7 +18,7 @@ export const UserService = {
     const Data = {
       userName: UserData.userName,    
       email: UserData.email,
-      password: "Tempor@iryPassword123", // Default password, should be changed by user
+      password: "Tempor@iryPassword123", 
       defaultRole: UserData.roles, 
     };
     try { 

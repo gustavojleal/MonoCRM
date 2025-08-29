@@ -10,7 +10,7 @@ interface ContactItemProps {
 const ContactItem: React.FC<ContactItemProps> = ({ contact }) => {
   return (
     <>
-      <tr key={contact.id} className="Contact-row">
+      <tr key={contact.id} className="Contact-row" onClick={() => console.log(contact)}>
 
         <td className="Contact-cell">{formatField(contact.firstName, 15)}</td>
         <td className="Contact-cell">{formatField(contact.lastName, 15)}</td>
@@ -20,6 +20,7 @@ const ContactItem: React.FC<ContactItemProps> = ({ contact }) => {
         <td className="Contact-cell">{formatField(contact.jobTitle, 10)}</td>
         <td className="Contact-cell">{formatField(contact.createdAt, 10)}</td>
         <td className="Contact-cell">{formatField(contact.updatedAt, 10)}</td>
+        <td className="Contact-cell">{formatField(contact.status ? contact.status : "New", 10)}</td>
       </tr>
 
     </>
@@ -33,7 +34,6 @@ function formatField(value: any, length: number): string {
   const formattedValue = resevedValue.length > length
     ? resevedValue.slice(0, length)
     : resevedValue.padEnd(length, '');
-  console.log('Formatted Value:', formattedValue.length); // Debugging line
 
   return formattedValue + ' ';
 }

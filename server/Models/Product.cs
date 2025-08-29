@@ -5,7 +5,7 @@ namespace Server.Models
 {
   public class Product
   {
-    public int Id { get; set; }
+    public Guid Id { get; set; }
 
     [Required]
     [StringLength(200)]

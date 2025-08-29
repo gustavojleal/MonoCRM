@@ -4,7 +4,7 @@ namespace Server.Models
 {
   public class Activity
   {
-    public int Id { get; set; }
+    public Guid Id { get; set; }
 
     [Required]
     [StringLength(200)]
@@ -30,13 +30,13 @@ namespace Server.Models
     public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
 
     // Navigation properties
-    public int? ContactId { get; set; }
+    public Guid? ContactId { get; set; }
     public Contact? Contact { get; set; }
 
-    public int? DealId { get; set; }
+    public Guid? DealId { get; set; }
     public Deal? Deal { get; set; }
 
-    public int? AccountId { get; set; }
+    public Guid? AccountId { get; set; }
     public Account? Account { get; set; }
   }
 }
