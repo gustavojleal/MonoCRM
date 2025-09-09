@@ -23,7 +23,7 @@ export const AppLayout: React.FC<AppLayoutProps> = ({
         </Helmet>
 
 
-        <main >
+        <main>
           <div >
             {children}
           </div>

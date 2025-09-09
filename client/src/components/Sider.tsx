@@ -2,11 +2,10 @@ import React, { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import {
-  FiHome, FiUser, FiTarget, FiBriefcase, FiDollarSign,
+  FiHome, FiUser, FiBriefcase,
   FiCalendar, FiCheckSquare, FiPhone, FiMail,
-  FiBarChart2, FiSettings, FiFile, FiBox, FiHelpCircle, FiGlobe, FiChevronRight, FiChevronsRight
+  FiBarChart2, FiSettings, FiFile, FiBox, FiHelpCircle, FiGlobe, 
 } from 'react-icons/fi';
-import { IoMdArrowDropright } from 'react-icons/io';
 import { getLanguages, changeLanguage } from '../i18n/utils';
 import LanguageSwitch from './LanguageSwitch';
 import { AppConfigContext } from '../app/AppConfigProvider';
@@ -14,25 +13,25 @@ import { AppConfigContext } from '../app/AppConfigProvider';
 
 const Sider = () => {
   const { t } = useTranslation();
-  const navigate = useNavigate();
-  const appConfig = useContext(AppConfigContext);
-  const { showSider } = appConfig || {};
+  
   const [showLangDropdown, setShowLangDropdown] = useState(false);
   const [showDropdownFor, setShowDropdownFor] = useState<string | null>(null);
-
+  const navigate = useNavigate();
+  const appConfig = useContext(AppConfigContext);
+  
+  if (!appConfig) {
+    return null;
+  }
+  
+  const { showSider, toggleSider } = appConfig;
+ 
   const languages = getLanguages();
 
 
 
   const menuItems = [
     { name: 'dashboard', icon: <FiHome />, action: 'homepage' },
-    {
-      name: 'contacts', icon: <FiUser />, action: 'contactpage',
-      dropdown: [
-        { name: 'all_contacts', action: 'contactList' },
-        { name: 'new_contact', action: 'CreateContact' },
-      ]
-    },
+    { name: 'contacts', icon: <FiUser />, action: 'contactpage'},
     { name: 'accounts', icon: <FiBriefcase /> },
     { name: 'calendar', icon: <FiCalendar /> },
     { name: 'Activitys', icon: <FiCheckSquare /> },
@@ -47,9 +46,7 @@ const Sider = () => {
     { name: 'language', icon: <FiGlobe />, action: 'changeLanguage' },
   ];
 
-  const handleMenuClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-    const label = e.currentTarget.getAttribute('data-label');
-    const action = e.currentTarget.getAttribute('data-action');
+  const handleMenuClick = (name: string, action?: string) => {
     if (action === 'changeLanguage') {
       setShowLangDropdown((prev) => !prev);
       setShowDropdownFor(null);
@@ -58,52 +55,42 @@ const Sider = () => {
 
     if (action) {
       navigate(`/${action}`);
-    } else if (label) {
-      setShowDropdownFor((prev) => (prev === label ? null : label));
+    } else if (name) {
+      setShowDropdownFor((prev) => (prev === name ? null : name));
     }
   };
 
   const handleLanguageChange = (langCode: string) => {
     changeLanguage(langCode);
     setShowLangDropdown(false);
+    
   };
 
   return (
     <aside className={`sider ${showSider ? '' : 'collapsed'}`}>
+           <button
+          className="sider-toggle"
+          onClick={toggleSider}
+          aria-label={t('header.toggleSider')}
+        >
+          {showSider ? (
+            <i className="fas fa-chevron-left"></i>
+          ) : (
+            <i className="fas fa-chevron-right"></i>
+          )}
+        </button>
       <nav>
         <ul>
           {menuItems.map((item) => (
-            <li key={item.name} style={{ position: 'relative' }}>
-              <button
-                type="button"
-                className="sider-menu-btn"
-                data-label={item.name}
-                data-action={item.action}
-                onClick={handleMenuClick}
-              >
-                <span className="sider-icon">{item.icon}</span>
+            <li key={item.name} className="menu-item">
+              <div className={`menu-item-content ${showDropdownFor === item.name ? 'expanded' : ''}`}
+                onClick={() => handleMenuClick(item.name, item.action)}
+                >
+                <span className="menu-icon">{item.icon}</span>
                 {showSider && <span>{t(item.name)}</span>}
-                {item.dropdown && (
-                  <span className="sider-icon"><IoMdArrowDropright /></span>
-                )}
-              </button>
-              {item.dropdown && showDropdownFor === item.name && (
-                <ul className="sider-dropdown">
-                  {item.dropdown.map((sub) => (
-                    <li key={sub.name}>
-                      <button
-                        type="button"
-                        className="sider-menu-btn"
-                        data-label={sub.name}
-                        data-action={sub.action}
-                        onClick={handleMenuClick}
-                      >
-                        {showSider && <span>{t(sub.name)}</span>}
-                      </button>
-                    </li>
-                  ))}
-                </ul>
-              )}
+       
+              </div>
+  
             </li>
           ))}
 

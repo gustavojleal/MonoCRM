@@ -1,4 +1,4 @@
-import React, { createContext, useState, useCallback } from 'react';
+import React, { createContext, useState, useCallback, useEffect } from 'react';
 import i18n from '../i18n/i18n';
 
 type AppConfig = {
@@ -29,6 +29,16 @@ export const AppConfigProvider: React.FC<{ children: React.ReactNode }> = ({ chi
     localStorage.setItem('language', lang);
     i18n.changeLanguage(lang);
   }, []);
+
+
+  // Efeito para aplicar a classe ao body quando o tema muda
+  useEffect(() => {
+    if (theme === 'dark') {
+      document.body.classList.add('dark-theme');
+    } else {
+      document.body.classList.remove('dark-theme');
+    }
+  }, [theme]);
 
   return (
     <AppConfigContext.Provider

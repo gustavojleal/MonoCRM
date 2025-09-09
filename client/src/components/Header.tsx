@@ -1,6 +1,5 @@
 import React from 'react';
-import { PiSidebarThin, PiUserCircleThin } from "react-icons/pi";
-import { FaPersonWalkingArrowLoopLeft } from "react-icons/fa6";
+
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { AppConfigContext } from '../app/AppConfigProvider';
@@ -14,7 +13,7 @@ const Header = () => {
     return null;
   }
 
-  const { toggleSider, toggleLogged, userLogged } = appConfig;
+  const { toggleLogged, userLogged, toggleTheme, theme } = appConfig;
 
   const handleSearchSubmit = (searchTerm: string) => {
     console.log(`Searching for: ${searchTerm}`);
@@ -26,42 +25,45 @@ const Header = () => {
 
   return (
     <header className="header">
-      <div className="header-container">
-        <button
-          className="sider-toggle"
-          onClick={toggleSider}
-          aria-label={t('header.toggleSider')}
-        >
-          <PiSidebarThin size={20} className="side-icon" />
-        </button>
-
-        <div className="search-container">
-          <SearchBox
-            placeHolder={t("search.placeholder")}
-            onSubmit={handleSearchSubmit}
-            ariaLabel={t("header.search.ariaLabel")}
-            darkMode={true}
-          />
+ 
+        <h1>Micro CRM</h1>
+        <SearchBox
+          placeHolder={t("search.placeholder")}
+          onSubmit={handleSearchSubmit}
+          ariaLabel={t("header.search.ariaLabel")}
+        />
+        
+      <div className="header-actions">
+        <div className="theme-toggle" id="themeToggle">
+          {theme === 'light' ? (
+            <i className="fas fa-moon" onClick={toggleTheme}></i>
+          ) : (
+            <i className="fas fa-sun" onClick={toggleTheme}></i>
+          )}
         </div>
+        
+        <div className="user-actions">
+          {!userLogged ? (
+            <button className="login-btn" onClick={handleProfile}>
+              Login
+            </button>
+          ) : (
+            <button className="logout-btn" onClick={toggleLogged}>
+              Logout
+            </button>
+          )}
+        </div>
+        
+        <button 
+          className="user-profile"
+          onClick={userLogged ? toggleLogged : handleProfile}
+          aria-label={userLogged ? t('header.logout') : t('header.login')}
+        >
+
+        </button>
       </div>
-      {!userLogged &&
-        <button
-          className="user-profile"
-          onClick={handleProfile}
-          aria-label={t('header.login')}
-        >
-          <PiUserCircleThin size={40} className="profile-icon" />
-        </button>
-      }
-      {userLogged &&
-        <button
-          className="user-profile"
-          onClick={toggleLogged}
-          aria-label={t('header.login')}
-        >
-          <FaPersonWalkingArrowLoopLeft size={40} className="profile-icon" />
-        </button>
-      }
+
+
     </header>
   );
 };

@@ -74,9 +74,11 @@ export interface FieldConfig {
   required?: boolean;
   options?: string[];
   defaultValue?: any;
+  valeu?: any;
   validation?: Record<string, any>;
   min?: number;
   max?: number;
   step?: number;
   order?: number;
+  editable?: boolean;
 }

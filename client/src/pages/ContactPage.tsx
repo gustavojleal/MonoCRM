@@ -1,25 +1,35 @@
 import React from 'react';
 import { AppLayout } from '../layouts/AppLayout';
-import PageHeader from '../components/core/PageHeader';
-
+import Tabs, { Tab } from '../components/Tabs';
+import ContactList from '../components/ContactList';
+import ContactForm from '../components/Forms/ContactForm';
 
 const ContactPage: React.FC = () => {
+  const tabsItems: Tab[] = [
+    {
+      id: 'allcontacts',
+      label: 'All Contacts',
+      content: <ContactList />
+    },
+    {
+      id: 'newcontact',
+      label: 'New Contact',
+      content: <ContactForm/>
+    }
+  ]
+
   return (
     <AppLayout>
-      <PageHeader
-        title="Criar Novo Contact"
-        breadcrumbs={[{ label: 'New Contact', href: '/createContact' }, { label: 'Contact', href: '/ContactList' }]}
-        description="Preencha os detalhes do lead para iniciar o processo de vendas."
-
-      />
-
-      <div className="max-w-4xl mx-auto p-4">
-
-
-        <div className="mt-8">
-          <h3 className="text-lg font-medium">Ações Rápidas</h3>
-        </div>
+      <div className="page-container">
+        <Tabs 
+          tabs={tabsItems} 
+          defaultActiveTab="allcontacts" 
+          variant="default" 
+          position="top" 
+          className="user-settings-tabs"
+        />
       </div>
+
     </AppLayout>
   );
 };

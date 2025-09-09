@@ -5,7 +5,7 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import Sider from '../components/Sider';
 
-import '../styles/style.css';
+import '../styles/globalStyle.css';
 
 const MainLayout = () => {
   const appConfig = React.useContext(AppConfigContext);
@@ -21,12 +21,12 @@ const MainLayout = () => {
   return (
     <div className="app-container">
       <Header />
-      <div className="layout-body" >
+      <div className="layout-content">
         <Sider />
-        <main className="content-area">
-          <section className="main-content">
+        <main className="main-content-container">
+          <div className="main-content">
             <Outlet />
-          </section>
+          </div>
         </main>
       </div>
       <Footer />

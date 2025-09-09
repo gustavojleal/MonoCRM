@@ -7,6 +7,7 @@ export const contactFormConfig: FieldConfig[] = [
     placeholder: 'enter_first_name',
     required: true,
     validation: { minLength: 2, message: 'min2' },
+    editable: true,
     order: 1
   },
   { name: 'lastName',

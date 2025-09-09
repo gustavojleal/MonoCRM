@@ -1,4 +1,4 @@
-export type EntityStatus = 'active' | 'inactive' | 'pending';
+export type EntityStatus = 'new' |'active' | 'inactive' | 'pending';
 export type TaskPriority = 'low' | 'medium' | 'high';
 export type TaskStatus = 'pending' | 'in-progress' | 'completed';
 
