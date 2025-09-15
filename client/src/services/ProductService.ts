@@ -1,4 +1,4 @@
 import { api } from './PublicApi'
-import { Product } from '../types/types';
+import { Product } from '../common/types/types';
 
 export const ProductService = {}

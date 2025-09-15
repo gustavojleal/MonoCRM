@@ -1,8 +1,9 @@
 import React from 'react';
 import { AppLayout } from '../layouts/AppLayout';
 import Tabs, { Tab } from '../components/Tabs';
-import ContactList from '../components/ContactList';
-import ContactForm from '../components/Forms/ContactForm';
+import ContactList from '../features/contact/components/ContactList';
+import ContactForm from '../features/contact/components/ContactForm';
+// import ContactForm from '../components/Forms/ContactForm';
 
 const ContactPage: React.FC = () => {
   const tabsItems: Tab[] = [

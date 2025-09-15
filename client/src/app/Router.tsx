@@ -3,8 +3,9 @@ import MainLayout from './MainLayout';
 import HomePage from '../pages/HomePage';
 import ContactPage from '../pages/ContactPage';
 import AboutPage from '../pages/AboutPage';
-import CreateContactForm from '../components/Forms/ContactForm';
-import ContactList from '../components/ContactList';
+import CreateContactForm from '../features/contact/components/ContactForm';
+// import CreateContactForm from '../components/Forms/ContactForm';
+import ContactList from '../features/contact/components/ContactList';
 import UserLogin from '../components/Forms/UserLogin'
 import AdminDashboard from '../pages/AdminDashboard'
 

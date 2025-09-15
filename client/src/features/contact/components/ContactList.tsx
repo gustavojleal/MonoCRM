@@ -1,41 +1,43 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { AppLayout } from '../layouts/AppLayout';
-import { ContactService } from '../services/ContactService';
+import { AppLayout } from '../../../layouts/AppLayout';
+import { fetchContacts, setSelectedContact } from '../contactsSlice';
 import ContactItem from '../components/ContactItem';
-import { Contact } from '../types/types';
+import { RootState, AppDispatch } from '../../../app/store';
+import { Contact } from '../types';
 
 const ContactList: React.FC = () => {
-  const [contacts, setContacts] = useState<Contact[]>([]);
+  const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
-
-  const fetchContacts = async () => {
-    try {
-      const data = await ContactService.getAll();
-      setContacts(data);
-    } catch (error) {
-      // showNotification('Erro ao buscar contatos.', 'error');
-    }
-  };
+  
+  const { list: contacts, loading, error } = useSelector((state: RootState) => state.contacts);
 
   const HandlerEdit = (contact: Contact) => {
-    navigate(`/CreateContact`, { state: { contact } });
-   
+    dispatch(setSelectedContact(contact));
+    navigate(`/CreateContact`);
   }
 
   useEffect(() => {
-    fetchContacts();
-  }, []);
+    dispatch(fetchContacts());
+  }, [dispatch]);
+
+  if (loading) {
+    return <div>Carregando...</div>;
+  }
+
+  if (error) {
+    return <div>Erro: {error}</div>;
+  }
 
   return (
     <AppLayout>
-
       <div className="container">
         <h1 className="title">Lista de Contatos</h1>
         {contacts.length === 0 ? (
           <p>Nenhum contato encontrado.</p>
         ) : (
-            <table className="contact-table">
+          <table className="contact-table">
             <thead>
               <tr>
                 <th className="column name">Nome</th>
@@ -45,12 +47,11 @@ const ContactList: React.FC = () => {
                 <th className="column created">Criado</th>
                 <th className="column updated">Atualizado</th>
                 <th className="column status">Status</th>
-                {/* <th className="py-2 px-4 border-b">Ações</th> */}
               </tr>
             </thead>
             <tbody>
               {contacts.map((contact, index) => (
-                <ContactItem index={index + 1} key={contact.id} contact={contact} onEdit={HandlerEdit} />
+                <ContactItem key={contact.id} index={index + 1} contact={contact} onEdit={HandlerEdit} />
               ))}
             </tbody>
           </table>
@@ -61,4 +62,5 @@ const ContactList: React.FC = () => {
 };
 
 export default ContactList;
+
 

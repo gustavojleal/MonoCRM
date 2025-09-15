@@ -1,6 +1,6 @@
 import React from 'react';
 import { Controller, UseFormReturn } from 'react-hook-form';
-import { FieldConfig } from '../../types/formTypes';
+import { FieldConfig } from '../../common/types/formTypes';
 import FormFieldRenderer from './FormFieldRenderer';
 import { useTranslation } from 'react-i18next';
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import RoleBadge from './RoleBadge';
-import { User, Role } from '../../types/types';
+import { User, Role } from '../../common/types/types';
 
 interface UserTableProps {
   users: User[];

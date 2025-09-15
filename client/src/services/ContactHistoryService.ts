@@ -1,5 +1,5 @@
 import api from './AuthedApi';
-import { ContactHistory } from '../types/types';
+import { ContactHistory } from '../common/types/types';
 
 export const ContactHistoryService = {
   getByContactId: async (id: string): Promise<ContactHistory[]> => {

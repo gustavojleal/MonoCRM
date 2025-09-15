@@ -1,4 +1,4 @@
-import { FieldConfig, FieldType } from '../../../types/formTypes';
+import { FieldConfig, FieldType } from '../../../common/types/formTypes';
 import { getRoles } from '../utils/FormUtils';
 
 

@@ -1,4 +1,4 @@
 import { api } from './PublicApi'
-import { Deal } from '../types/types';
+import { Deal } from '../common/types/types';
 
 export const DealService = {}

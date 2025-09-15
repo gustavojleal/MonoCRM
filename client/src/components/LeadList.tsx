@@ -4,7 +4,7 @@ import NotificationContainer from '../components/core/Notifications';
 import { LeadService } from '../services/PublicApi';
 import { useNotification } from '../context/NotificationContext';
 import LeadItem from '../components/LeadItem';
-import { Lead } from '../types/types';
+import { Lead } from '../common/types/types';
 
 const LeadList: React.FC = () => {
   const { notifications, removeNotification } = useNotification();

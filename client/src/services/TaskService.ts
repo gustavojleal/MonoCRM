@@ -1,5 +1,5 @@
 import api from './PublicApi';
-import { Task, CreateTaskPayload, UpdateTaskPayload } from '../types/types';
+import { Task, CreateTaskPayload, UpdateTaskPayload } from '../common/types/types';
 
 export const TaskService = {
   getAll: async (): Promise<Task[]> => {

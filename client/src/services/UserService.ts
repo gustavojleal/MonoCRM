@@ -1,5 +1,5 @@
 import authedApi from './AuthedApi';
-import { User } from '../types/types';
+import { User } from '../common/types/types';
 
 export interface UsersResponse {
   id: string; 

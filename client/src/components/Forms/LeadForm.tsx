@@ -2,7 +2,7 @@ import React from 'react';
 import { leadFormConfig } from './schema/leadFormConfig';
 import { useDynamicForm } from '../../hooks/useDynamicForm';
 import { LeadService } from '../../services/PublicApi';
-import { Lead } from '../../types/types';
+import { Lead } from '../../common/types/types';
 import FormBuilder from '../core/FormBuilder';
 import NotificationContainer from '../core/Notifications';
 import { useNotification } from '../../context/NotificationContext';

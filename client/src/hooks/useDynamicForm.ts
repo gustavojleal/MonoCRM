@@ -1,5 +1,5 @@
 import { useForm } from 'react-hook-form';
-import { FieldConfig, getDefaultValueForType } from '../types/formTypes';
+import { FieldConfig, getDefaultValueForType } from '../common/types/formTypes';
 
 
 export const useDynamicForm = (formConfig: FieldConfig[], data?: Record<string, any>) => {

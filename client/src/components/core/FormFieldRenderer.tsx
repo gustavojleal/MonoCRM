@@ -1,6 +1,6 @@
 import React from 'react';
 import { ControllerRenderProps } from 'react-hook-form';
-import { FieldConfig, FieldType } from '../../types/formTypes';
+import { FieldConfig, FieldType } from '../../common/types/formTypes';
 import { useTranslation } from 'react-i18next';
 
 interface FormFieldRendererProps {

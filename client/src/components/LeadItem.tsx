@@ -1,5 +1,5 @@
 import React from 'react';
-import { Lead } from '../types/types';
+import { Lead } from '../common/types/types';
 
 interface LeadItemProps {
   lead: Lead;

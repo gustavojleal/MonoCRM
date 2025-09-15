@@ -3,7 +3,7 @@ import { AuthService } from '../services/AuthService';
 import { UserService } from "../services/UserService";
 import UserTable from '../components/UserManagement/UserTable';
 import UserForm from '../components/UserManagement/UserForm';
-import { User, Role } from '../types/types';
+import { User, Role } from '../common/types/types';
 
 const AdminDashboard: React.FC = () => {
   const [users, setUsers] = useState<User[]>([]);

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Task, TaskPriority, TaskStatus } from '../types/types';
+import { Task, TaskPriority, TaskStatus } from '../common/types/types';
 
 interface TaskItemProps {
   task: Task;

@@ -1,5 +1,5 @@
 import api from './AuthedApi';
-import { Contact } from '../types/types';
+import { Contact } from '../common/types/types';
 
 export const ContactService = {
   getAll: async (): Promise<Contact[]> => {

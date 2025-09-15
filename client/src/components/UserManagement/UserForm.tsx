@@ -3,7 +3,7 @@ import { UserService } from "../../services/UserService";
 import { userFormConfig } from '../Forms/schema/userFormConfig';
 import { useDynamicForm } from '../../hooks/useDynamicForm';
 import FormBuilder from '../core/FormBuilder';
-import { User } from '../../types/types'
+import { User } from '../../common/types/types'
 
 const UserForm: React.FC = () => {
   const methods = useDynamicForm(userFormConfig)

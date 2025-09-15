@@ -29,21 +29,7 @@ export interface Account {
   updatedAt: string;
 }
 
-export interface Contact {
-  id?: number;
-  firstName: string;
-  lastName: string;
-  email: string;
-  phone: string;
-  company?: string;
-  jobTitle?: string;
-  status?: EntityStatus;
-  source?: string;
-  accountId?: number;
-  createdAt?: string;
-  updatedAt?: string;
-  history?: ContactHistory[];
-}
+
 
 export interface ContactHistory {
   id: string;
@@ -107,7 +93,6 @@ export interface Lead {
 }
 
 export interface Account {}
-export interface Contact {}
 export interface Deal {}
 export interface Product {}
 
